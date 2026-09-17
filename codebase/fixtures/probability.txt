@@ -1,0 +1,4 @@
+Hai biến cố A và B độc lập khi P(A ∩ B) = P(A) × P(B). Khi P(B) > 0, điều này tương đương P(A | B) = P(A).
+Với đồng xu cân đối và các lần tung độc lập, xác suất ngửa ở mỗi lần vẫn là 1/2, bất kể kết quả các lần trước.
+Độc lập khác với xung khắc: hai biến cố xung khắc không thể cùng xảy ra.
+Nếu bốc bi rồi không hoàn lại, các lần bốc sau có thể phụ thuộc vào những lần trước vì thành phần của hộp đã thay đổi.

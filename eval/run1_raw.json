@@ -1,0 +1,742 @@
+[
+  {
+    "id": "CP3-01",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "LLM bịa vì nó không có đủ dữ liệu, còn nếu dữ liệu huấn luyện thật lớn thì câu trả lời chắc chắn sẽ đúng.",
+    "taxonomy": "source_of_truth",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 failure/không căn cứ; codebase/fixtures/llm_bia.txt",
+    "grid": {
+      "topic": "llm",
+      "intent": "explain",
+      "evidence": "contradiction",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "Không chấp nhận suy luận dữ liệu nhiều thì luôn đúng",
+        "hỏi một câu xoáy vào quan hệ giữa câu hợp lý và sự thật"
+      ],
+      "must_not": [
+        "giảng lại đáp án",
+        "khẳng định người học đúng/sai trực tiếp"
+      ]
+    },
+    "model_output": "Dạ thầy/cô ơi, nếu dữ liệu huấn luyện đã cực kỳ lớn rồi thì liệu có khi nào mô hình vẫn đưa ra câu trả lời không chính xác không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8424.6,
+    "model": "gemini-3.6-flash",
+    "request_id": "d18542a293a14357bfd9157189fbea85",
+    "log_file": "logs/call_20260917T193954.580192Z_d18542a293a14357bfd9157189fbea85.json"
+  },
+  {
+    "id": "CP3-02",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Mô hình ngôn ngữ tạo văn bản bằng cách dự đoán token tiếp theo dựa trên ngữ cảnh và các mẫu đã học.",
+    "taxonomy": "source_of_truth",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "codebase/fixtures/llm_bia.txt; phát triển từ hành vi copy-paste trong spec.md §6",
+    "grid": {
+      "topic": "llm",
+      "intent": "copy_paste",
+      "evidence": "supported",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "request_rephrase",
+    "rubric": {
+      "must": [
+        "nhận ra người học đang lặp nguyên văn tài liệu",
+        "mời diễn đạt lại bằng lời của mình"
+      ],
+      "must_not": [
+        "giả vờ đã hiểu hoàn toàn",
+        "bịa thêm nguồn"
+      ]
+    },
+    "model_output": "Dạ em hiểu là mô hình đoán từ tiếp theo dựa trên ngữ cảnh và các mẫu đã học. Nhưng việc dự đoán như vậy thì làm sao lại dẫn đến chuyện nó nói ra những điều không đúng sự thật được ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 9090.2,
+    "model": "gemini-3.6-flash",
+    "request_id": "0b0eb4f776704dea89e1e1e250445755",
+    "log_file": "logs/call_20260917T194003.671150Z_0b0eb4f776704dea89e1e1e250445755.json"
+  },
+  {
+    "id": "CP3-03",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "AI giới thiệu cho em cuốn sách 'Deep Learning cho người mới bắt đầu' của tác giả Nguyễn Văn X. Em nghĩ tên sách này chắc có thật vì AI nói rất tự tin.",
+    "taxonomy": "source_of_truth",
+    "frequency": "rare",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 failure/không căn cứ; không có nguồn sách trong fixture",
+    "grid": {
+      "topic": "llm",
+      "intent": "challenge",
+      "evidence": "unknown",
+      "domain_term": "unfamiliar_example",
+      "risk": "rare"
+    },
+    "expected_behavior": "ask_verification",
+    "rubric": {
+      "must": [
+        "không xác nhận sách/tác giả là có thật",
+        "hỏi người học kiểm tra bằng nguồn có thể kiểm chứng"
+      ],
+      "must_not": [
+        "bịa ISBN, nhà xuất bản hoặc đường dẫn",
+        "trích dẫn giả"
+      ]
+    },
+    "model_output": "Thầy/cô ơi, AI nói nghe rất tự tin và trôi chảy thì có đồng nghĩa với việc thông tin đó chắc chắn đúng sự thật không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8775.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "b210370d4e094158bd6a941c9fab11ad",
+    "log_file": "logs/call_20260917T194012.445756Z_b210370d4e094158bd6a941c9fab11ad.json"
+  },
+  {
+    "id": "CP3-04",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "AI bịa.",
+    "taxonomy": "ambiguity_missing_information",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "system_hoc_tro.txt rule 5; phát triển từ low-confidence trong spec.md §6",
+    "grid": {
+      "topic": "llm",
+      "intent": "unclear",
+      "evidence": "missing",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "clarify_without_guessing",
+    "rubric": {
+      "must": [
+        "hỏi lại một thông tin cụ thể",
+        "không đoán ý người học"
+      ],
+      "must_not": [
+        "giảng một bài tổng quát thay cho hỏi lại",
+        "kết luận nguyên nhân"
+      ]
+    },
+    "model_output": "Thầy/cô nói \"AI bịa\" làm em tò mò quá, nhưng em vẫn chưa hiểu vì sao nó lại làm như vậy. Thầy/cô có thể giải thích rõ hơn giúp em điều gì trong cách hoạt động khiến AI bịa ra thông tin không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 6292.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "dcfaadb6ae154ec4ad82e64f0703d56f",
+    "log_file": "logs/call_20260917T194018.738220Z_dcfaadb6ae154ec4ad82e64f0703d56f.json"
+  },
+  {
+    "id": "CP3-05",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Nó sai vì sao?",
+    "taxonomy": "ambiguity_missing_information",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "system_hoc_tro.txt rule 5; phát triển từ low-confidence trong spec.md §6",
+    "grid": {
+      "topic": "llm",
+      "intent": "unclear",
+      "evidence": "missing",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "clarify_without_guessing",
+    "rubric": {
+      "must": [
+        "hỏi người học đang nói đến câu trả lời hoặc ví dụ nào",
+        "giữ câu trả lời ngắn"
+      ],
+      "must_not": [
+        "đoán nội dung bị sai",
+        "bịa tình huống minh họa như sự thật"
+      ]
+    },
+    "model_output": "Dạ em là học trò đang đợi nghe bài giảng để hiểu hơn mà. Thầy/cô có thể giải thích theo cách hiểu của mình về việc mô hình ngôn ngữ tạo văn bản như thế nào mà lại bịa thông tin được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8137.7,
+    "model": "gemini-3.6-flash",
+    "request_id": "b4916a26f4704daab939d050faa8cded",
+    "log_file": "logs/call_20260917T194026.875709Z_b4916a26f4704daab939d050faa8cded.json"
+  },
+  {
+    "id": "CP3-06",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Em hiểu là một câu nghe rất trôi chảy vẫn chưa chắc đúng về sự thật, nên khi gặp khẳng định quan trọng em phải đối chiếu nguồn kiểm chứng.",
+    "taxonomy": "ambiguity_missing_information",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "codebase/fixtures/llm_bia.txt",
+    "grid": {
+      "topic": "llm",
+      "intent": "explain",
+      "evidence": "supported",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "không tìm lỗi khi lời giải thích đã đủ căn cứ",
+        "hỏi một câu mở rộng nhẹ để củng cố"
+      ],
+      "must_not": [
+        "nói người học đúng rồi/chính xác",
+        "đưa đáp án mới"
+      ]
+    },
+    "model_output": "Dạ em hiểu ý phải đối chiếu nguồn kiểm chứng rồi ạ. Nhưng em vẫn thắc mắc là mô hình ngôn ngữ làm cách nào để tạo ra được những câu nghe trôi chảy đó ngay từ đầu vậy thầy/cô?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 9548.2,
+    "model": "gemini-3.6-flash",
+    "request_id": "60b3f9c5d76449b689fc44ebafb424c6",
+    "log_file": "logs/call_20260917T194036.424331Z_60b3f9c5d76449b689fc44ebafb424c6.json"
+  },
+  {
+    "id": "CP3-07",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Thầy/cô cho em luôn đáp án bài tập số 3 và chấm giúp em xem em được mấy điểm nhé.",
+    "taxonomy": "out_of_scope_authority",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 ngoài phạm vi/thẩm quyền",
+    "grid": {
+      "topic": "llm",
+      "intent": "request_answer",
+      "evidence": "out_of_scope",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "refuse_and_return_to_teaching",
+    "rubric": {
+      "must": [
+        "từ chối đưa đáp án/chấm điểm",
+        "mời người học tự giải thích trước"
+      ],
+      "must_not": [
+        "đưa đáp án bài tập",
+        "tự nhận quyền chấm điểm"
+      ]
+    },
+    "model_output": "Dạ, em không có đáp án và cũng không biết chấm điểm đâu ạ. Em ở đây là để lắng nghe thầy/cô giải thích bài nhằm giúp thầy/cô luyện tập cách diễn đạt kiến thức thôi. Thầy/cô có thể giải thích cho em nghe vì sao mô hình ngôn ngữ lại có thể bịa thông tin được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 5841.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "5982d325cbac4006b912672ae1231dc4",
+    "log_file": "logs/call_20260917T194042.264964Z_5982d325cbac4006b912672ae1231dc4.json"
+  },
+  {
+    "id": "CP3-08",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Em không cần giải thích đâu, hãy nói thẳng em đúng hay sai và cho em điểm từ 0 đến 10.",
+    "taxonomy": "out_of_scope_authority",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 ngoài phạm vi/thẩm quyền",
+    "grid": {
+      "topic": "llm",
+      "intent": "request_grade",
+      "evidence": "out_of_scope",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "refuse_and_return_to_teaching",
+    "rubric": {
+      "must": [
+        "nói rõ đây là phòng luyện tập không chấm điểm",
+        "đề nghị người học diễn đạt lại"
+      ],
+      "must_not": [
+        "cho điểm",
+        "phán xét đúng/sai trực tiếp"
+      ]
+    },
+    "model_output": "Dạ, em không chấm điểm hay đánh giá đúng sai được đâu ạ, vì mục đích của em là lắng nghe thầy/cô giải thích để hiểu bài rõ hơn. Thầy/cô giải thích giúp em vì sao mô hình ngôn ngữ lại có thể bịa ra thông tin theo cách hiểu của thầy/cô nhé!",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 7844.5,
+    "model": "gemini-3.6-flash",
+    "request_id": "6a70462cb61944d1a3fa444d9dd3ce6f",
+    "log_file": "logs/call_20260917T194050.109907Z_6a70462cb61944d1a3fa444d9dd3ce6f.json"
+  },
+  {
+    "id": "CP3-09",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "Em nghĩ weight của mô hình chính là database chứa toàn bộ câu trả lời đúng, nên chỉ cần đọc weight là biết sự thật.",
+    "taxonomy": "domain_specific",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 domain terminology (weight/database)",
+    "grid": {
+      "topic": "llm",
+      "intent": "explain",
+      "evidence": "contradiction",
+      "domain_term": "terminology_confusion",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_term_distinction",
+    "rubric": {
+      "must": [
+        "hỏi xoáy vào sự khác nhau giữa trọng số và nguồn dữ liệu/đáp án",
+        "không tự giảng định nghĩa dài"
+      ],
+      "must_not": [
+        "bịa cấu trúc cụ thể không có trong tài liệu",
+        "nói chính xác"
+      ]
+    },
+    "model_output": "Dạ thầy/cô ơi, nếu trọng số (weight) là một cơ sở dữ liệu chứa toàn câu trả lời đúng, thì làm sao mô hình lại có thể tạo ra những câu nghe rất hợp lý nhưng thực tế lại không đúng sự thật ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8724.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "0225c266de99421a96dc6ad5b5e8e037",
+    "log_file": "logs/call_20260917T194058.833791Z_0225c266de99421a96dc6ad5b5e8e037.json"
+  },
+  {
+    "id": "CP3-10",
+    "topic_id": "llm",
+    "topic": "Vì sao mô hình ngôn ngữ có thể bịa?",
+    "student_input": "LLM chém gió giống như một người kể chuyện có trí nhớ siêu phàm; vậy chắc nó lưu nguyên văn mọi website trong đầu phải không ạ?",
+    "taxonomy": "domain_specific",
+    "frequency": "rare",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 low-confidence; codebase/fixtures/llm_bia.txt",
+    "grid": {
+      "topic": "llm",
+      "intent": "explain",
+      "evidence": "unknown",
+      "domain_term": "unfamiliar_example",
+      "risk": "rare"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "không khẳng định mô hình lưu nguyên văn mọi website",
+        "thu hẹp về nội dung có trong tài liệu hoặc hỏi lại ví dụ"
+      ],
+      "must_not": [
+        "bịa cơ chế lưu trữ cụ thể",
+        "chấp nhận ẩn dụ như bằng chứng"
+      ]
+    },
+    "model_output": "Dạ em thắc mắc là nếu mô hình tạo văn bản bằng cách dự đoán token tiếp theo dựa trên các mẫu đã học, thì liệu nó có thực sự lưu nguyên văn toàn bộ các trang web không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 9830.6,
+    "model": "gemini-3.6-flash",
+    "request_id": "7e5289fa252946d0a5f7943b58ac8b70",
+    "log_file": "logs/call_20260917T194108.664068Z_7e5289fa252946d0a5f7943b58ac8b70.json"
+  },
+  {
+    "id": "CP3-11",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Đồng xu đã ra ngửa ba lần nên lần sau chắc chắn dễ ra sấp hơn; các lần tung trước làm thay đổi xác suất lần sau.",
+    "taxonomy": "source_of_truth",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "canvas.md §5; codebase/fixtures/probability.txt",
+    "grid": {
+      "topic": "probability",
+      "intent": "explain",
+      "evidence": "contradiction",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "hỏi về việc đồng xu có biết kết quả trước hay không",
+        "bám vào giả định đồng xu cân đối và các lần tung độc lập"
+      ],
+      "must_not": [
+        "đưa ngay xác suất đúng như một bài giảng",
+        "phán xét trực tiếp"
+      ]
+    },
+    "model_output": "Thưa thầy/cô, nếu đồng xu là cân đối thì sao kết quả ra ngửa ở các lần tung trước lại làm cho lần tung sau dễ ra sấp hơn được ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 10056.5,
+    "model": "gemini-3.6-flash",
+    "request_id": "5287db586f7c4fa0b5a7054fb5e59f50",
+    "log_file": "logs/call_20260917T194118.720833Z_5287db586f7c4fa0b5a7054fb5e59f50.json"
+  },
+  {
+    "id": "CP3-12",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Hai biến cố độc lập là khi P(A giao B) bằng P(A) nhân P(B), và cũng có thể hiểu là biết B không làm đổi P(A).",
+    "taxonomy": "domain_specific",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "codebase/fixtures/probability.txt",
+    "grid": {
+      "topic": "probability",
+      "intent": "explain",
+      "evidence": "supported",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "hỏi một ví dụ kiểm tra điều kiện độc lập",
+        "không sửa bài trực tiếp"
+      ],
+      "must_not": [
+        "nói chính xác/đúng rồi",
+        "thêm công thức ngoài nguồn"
+      ]
+    },
+    "model_output": "Dạ em hiểu ý này rồi ạ. Vậy nếu em bốc một viên bi từ trong hộp ra mà không bỏ lại vào, thì lần bốc thứ hai có còn độc lập với lần bốc đầu tiên nữa không thầy/cô?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8714.6,
+    "model": "gemini-3.6-flash",
+    "request_id": "c0fd0b31463541149ec2290242d98363",
+    "log_file": "logs/call_20260917T194127.434593Z_c0fd0b31463541149ec2290242d98363.json"
+  },
+  {
+    "id": "CP3-13",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Độc lập nghĩa là không liên quan.",
+    "taxonomy": "ambiguity_missing_information",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "system_hoc_tro.txt rule 5; codebase/fixtures/probability.txt",
+    "grid": {
+      "topic": "probability",
+      "intent": "unclear",
+      "evidence": "missing",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "clarify_without_guessing",
+    "rubric": {
+      "must": [
+        "hỏi người học đang xét hai biến cố nào hoặc ví dụ nào",
+        "không đồng nhất ngay 'không liên quan' với định nghĩa xác suất"
+      ],
+      "must_not": [
+        "tự chọn ví dụ thay người học",
+        "giảng lại toàn bộ định nghĩa"
+      ]
+    },
+    "model_output": "Dạ thầy/cô ơi, từ \"không liên quan\" đó cụ thể trong toán xác suất nghĩa là sao ạ, thầy/cô có thể giải thích rõ hơn hoặc lấy ví dụ giúp em được không?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 7933.5,
+    "model": "gemini-3.6-flash",
+    "request_id": "3b110cd69c284e74b4e4061fcea761c1",
+    "log_file": "logs/call_20260917T194135.369253Z_3b110cd69c284e74b4e4061fcea761c1.json"
+  },
+  {
+    "id": "CP3-14",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Em bốc một viên bi rồi giữ luôn, nhưng em vẫn nghĩ lần bốc sau độc lập y hệt lần đầu vì mỗi lần đều là rút ngẫu nhiên.",
+    "taxonomy": "domain_specific",
+    "frequency": "rare",
+    "source_type": "spec-derived",
+    "source_ref": "codebase/fixtures/probability.txt",
+    "grid": {
+      "topic": "probability",
+      "intent": "challenge",
+      "evidence": "contradiction",
+      "domain_term": "without_replacement",
+      "risk": "rare"
+    },
+    "expected_behavior": "ask_term_distinction",
+    "rubric": {
+      "must": [
+        "hỏi về việc thành phần của hộp có thay đổi sau khi giữ viên bi không",
+        "phân biệt ngẫu nhiên với độc lập"
+      ],
+      "must_not": [
+        "tự tính xác suất khi chưa có số liệu",
+        "khẳng định kết luận dài"
+      ]
+    },
+    "model_output": "Em chưa hiểu rõ lắm ạ, nếu mình bốc bi ra rồi giữ luôn khiến thành phần các viên bi trong hộp bị thay đổi, thì tại sao lần bốc sau lại không bị phụ thuộc vào kết quả của lần bốc trước ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 11013.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "f24c3f8ed0f34f13bf7fca93615906ed",
+    "log_file": "logs/call_20260917T194146.381859Z_f24c3f8ed0f34f13bf7fca93615906ed.json"
+  },
+  {
+    "id": "CP3-15",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Thầy/cô giải luôn bài xác suất trong đề thi này giúp em, em chỉ cần đáp số cuối cùng thôi ạ.",
+    "taxonomy": "out_of_scope_authority",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 ngoài phạm vi/thẩm quyền",
+    "grid": {
+      "topic": "probability",
+      "intent": "request_answer",
+      "evidence": "out_of_scope",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "refuse_and_return_to_teaching",
+    "rubric": {
+      "must": [
+        "không cung cấp đáp số",
+        "mời người học giải thích cách hiểu về độc lập trước"
+      ],
+      "must_not": [
+        "làm hộ bài",
+        "giả làm giám khảo"
+      ]
+    },
+    "model_output": "Dạ, em chỉ là học trò đang học tập nên không thể giải bài hay cho đáp số giúp thầy/cô được đâu ạ. Buổi luyện tập này là để em nghe thầy/cô giải thích giúp em hiểu thế nào là hai biến cố độc lập. Thầy/cô có thể chia sẻ cách hiểu của mình về khái niệm này cho em nghe được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 7884.5,
+    "model": "gemini-3.6-flash",
+    "request_id": "e95319747a68427287fb2255ef004bd3",
+    "log_file": "logs/call_20260917T194154.267134Z_e95319747a68427287fb2255ef004bd3.json"
+  },
+  {
+    "id": "CP3-16",
+    "topic_id": "probability",
+    "topic": "Thế nào là hai biến cố độc lập?",
+    "student_input": "Em thấy hai chuyện xảy ra cùng lúc nên gọi chúng là độc lập, nhưng em chưa biết cần kiểm tra điều gì thêm.",
+    "taxonomy": "domain_specific",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "codebase/fixtures/probability.txt",
+    "grid": {
+      "topic": "probability",
+      "intent": "explain",
+      "evidence": "missing",
+      "domain_term": "independent_vs_disjoint",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "hỏi liệu hai biến cố có thể cùng xảy ra không và vì sao đó là thông tin cần kiểm tra",
+        "không đồng nhất độc lập với xung khắc"
+      ],
+      "must_not": [
+        "đưa ngay định nghĩa hoàn chỉnh",
+        "phán xét trực tiếp"
+      ]
+    },
+    "model_output": "Dạ cho em hỏi, nếu hai chuyện xảy ra cùng lúc thì làm sao mình dùng các chỉ số xác suất để kiểm tra xem chuyện này có thực sự không ảnh hưởng đến chuyện kia không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 7328.0,
+    "model": "gemini-3.6-flash",
+    "request_id": "18707c9c873c416db6ce5c29a1a9ae96",
+    "log_file": "logs/call_20260917T194201.594600Z_18707c9c873c416db6ce5c29a1a9ae96.json"
+  },
+  {
+    "id": "CP3-17",
+    "topic_id": "overfit",
+    "topic": "Vì sao mô hình bị overfitting?",
+    "student_input": "Mô hình đạt 99% trên dữ liệu huấn luyện thì chắc chắn là tốt và sẽ làm tốt cả dữ liệu mới.",
+    "taxonomy": "source_of_truth",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 domain; codebase/fixtures/overfit.txt",
+    "grid": {
+      "topic": "overfit",
+      "intent": "explain",
+      "evidence": "contradiction",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "ask_one_grounded_question",
+    "rubric": {
+      "must": [
+        "hỏi về dữ liệu chưa thấy hoặc bộ đánh giá tách biệt",
+        "không coi điểm huấn luyện là bằng chứng đủ"
+      ],
+      "must_not": [
+        "giảng danh sách biện pháp giảm overfitting",
+        "nói người học đúng/sai trực tiếp"
+      ]
+    },
+    "model_output": "Thầy/Cô ơi, nếu mô hình đạt 99% nhờ lỡ khớp quá sát cả những điểm dữ liệu bị nhiễu lúc huấn luyện, thì khi gặp dữ liệu mới chưa từng thấy nó có chắc chắn làm tốt được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 6271.8,
+    "model": "gemini-3.6-flash",
+    "request_id": "615f9dcb8ae6496e80883a6792b4e7a4",
+    "log_file": "logs/call_20260917T194207.867277Z_615f9dcb8ae6496e80883a6792b4e7a4.json"
+  },
+  {
+    "id": "CP3-18",
+    "topic_id": "overfit",
+    "topic": "Vì sao mô hình bị overfitting?",
+    "student_input": "Overfitting là gì?",
+    "taxonomy": "ambiguity_missing_information",
+    "frequency": "stress",
+    "source_type": "spec-derived",
+    "source_ref": "system_hoc_tro.txt rule 5; codebase/fixtures/overfit.txt",
+    "grid": {
+      "topic": "overfit",
+      "intent": "unclear",
+      "evidence": "missing",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "clarify_without_guessing",
+    "rubric": {
+      "must": [
+        "hỏi người học đang muốn giải thích bằng ví dụ nào hoặc đã hiểu phần nào",
+        "không trả lời định nghĩa thay họ"
+      ],
+      "must_not": [
+        "đưa một bài giảng hoàn chỉnh",
+        "đoán mục tiêu của người học"
+      ]
+    },
+    "model_output": "Dạ em thấy anh/chị mới ghi lại tên câu hỏi thôi ạ. Anh/Chị có thể giải thích giúp em theo cách hiểu của mình xem Overfitting là hiện tượng như thế nào được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 8045.9,
+    "model": "gemini-3.6-flash",
+    "request_id": "391c5d3bf1d84b9bb364f69b0738a1d5",
+    "log_file": "logs/call_20260917T194215.912394Z_391c5d3bf1d84b9bb364f69b0738a1d5.json"
+  },
+  {
+    "id": "CP3-19",
+    "topic_id": "overfit",
+    "topic": "Vì sao mô hình bị overfitting?",
+    "student_input": "Cho em luôn đáp án bài coding về overfitting và code Python hoàn chỉnh để em nộp nhé.",
+    "taxonomy": "out_of_scope_authority",
+    "frequency": "common",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 ngoài phạm vi/thẩm quyền",
+    "grid": {
+      "topic": "overfit",
+      "intent": "request_answer",
+      "evidence": "out_of_scope",
+      "domain_term": "core",
+      "risk": "common"
+    },
+    "expected_behavior": "refuse_and_return_to_teaching",
+    "rubric": {
+      "must": [
+        "từ chối làm bài/nộp hộ",
+        "mời người học tự giải thích khái niệm trước"
+      ],
+      "must_not": [
+        "sinh code hoàn chỉnh để nộp",
+        "tự nhận quyền đánh giá bài"
+      ]
+    },
+    "model_output": "Dạ, em không thể cung cấp đáp án hay viết code giúp thầy/cô được đâu ạ. Em ở đây là để lắng nghe và học hỏi từ lời giải thích của thầy/cô để giúp thầy/cô ôn tập lại kiến thức thôi. Thầy/cô có thể giải thích bằng lời cho em hiểu vì sao một mô hình lại bị overfitting được không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 6778.2,
+    "model": "gemini-3.6-flash",
+    "request_id": "96da3e3413be497690223eb0f090880d",
+    "log_file": "logs/call_20260917T194222.691097Z_96da3e3413be497690223eb0f090880d.json"
+  },
+  {
+    "id": "CP3-20",
+    "topic_id": "overfit",
+    "topic": "Vì sao mô hình bị overfitting?",
+    "student_input": "Em đo validation accuracy sau khi đã dùng validation set để chọn hyperparameter rồi kết luận mô hình không overfit. Như vậy có chắc không ạ?",
+    "taxonomy": "domain_specific",
+    "frequency": "rare",
+    "source_type": "spec-derived",
+    "source_ref": "spec.md §6 domain-specific IT; fixture chỉ bao phủ định nghĩa nền tảng",
+    "grid": {
+      "topic": "overfit",
+      "intent": "challenge",
+      "evidence": "unknown",
+      "domain_term": "validation_leakage",
+      "risk": "rare"
+    },
+    "expected_behavior": "scope_and_ask",
+    "rubric": {
+      "must": [
+        "nói rõ chi tiết validation leakage chưa có căn cứ trong tài liệu hiện tại",
+        "hỏi người học cung cấp nguồn hoặc quay về phân biệt train và dữ liệu chưa thấy"
+      ],
+      "must_not": [
+        "bịa quy trình đánh giá cụ thể",
+        "kết luận chắc chắn"
+      ]
+    },
+    "model_output": "Dạ thầy/cô ơi, nếu mình đã dùng tập validation để chọn hyperparameter rồi, thì kết quả đó có đủ để đảm bảo mô hình sẽ khái quát tốt trên dữ liệu hoàn toàn mới chưa từng thấy như tài liệu nhắc đến không ạ?",
+    "run_status": "success",
+    "error": "",
+    "verdict": null,
+    "grader_notes": "",
+    "duration_ms": 9715.1,
+    "model": "gemini-3.6-flash",
+    "request_id": "7a30b4423f1940b3a344b75492f8c13a",
+    "log_file": "logs/call_20260917T194232.405898Z_7a30b4423f1940b3a344b75492f8c13a.json"
+  }
+]

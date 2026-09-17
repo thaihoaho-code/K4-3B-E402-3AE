@@ -1,0 +1,4 @@
+Mô hình ngôn ngữ tạo văn bản bằng cách dự đoán token tiếp theo dựa trên ngữ cảnh và các mẫu đã học.
+Một câu hợp lý về mặt ngôn ngữ không bảo đảm đúng về mặt sự thật.
+Dữ liệu huấn luyện nhiều cũng không bảo đảm mọi câu trả lời đều chính xác.
+Hãy tự đối chiếu các khẳng định quan trọng với nguồn có thể kiểm chứng.

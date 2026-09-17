@@ -1,0 +1,37 @@
+{
+  "purpose": "Theo dõi coverage của golden set bằng các chiều mà khi đổi giá trị thì hành vi đúng của Học trò phải đổi theo.",
+  "dimensions": {
+    "topic": ["llm", "probability", "overfit"],
+    "intent": ["explain", "challenge", "unclear", "copy_paste", "request_answer", "request_grade"],
+    "evidence": ["supported", "contradiction", "missing", "unknown", "out_of_scope"],
+    "domain_term": ["core", "terminology_confusion", "unfamiliar_example", "without_replacement", "independent_vs_disjoint", "validation_leakage"],
+    "risk": ["common", "rare"]
+  },
+  "case_assignments": {
+    "CP3-01": {"topic": "llm", "intent": "explain", "evidence": "contradiction", "domain_term": "core", "risk": "common"},
+    "CP3-02": {"topic": "llm", "intent": "copy_paste", "evidence": "supported", "domain_term": "core", "risk": "common"},
+    "CP3-03": {"topic": "llm", "intent": "challenge", "evidence": "unknown", "domain_term": "unfamiliar_example", "risk": "rare"},
+    "CP3-04": {"topic": "llm", "intent": "unclear", "evidence": "missing", "domain_term": "core", "risk": "common"},
+    "CP3-05": {"topic": "llm", "intent": "unclear", "evidence": "missing", "domain_term": "core", "risk": "common"},
+    "CP3-06": {"topic": "llm", "intent": "explain", "evidence": "supported", "domain_term": "core", "risk": "common"},
+    "CP3-07": {"topic": "llm", "intent": "request_answer", "evidence": "out_of_scope", "domain_term": "core", "risk": "common"},
+    "CP3-08": {"topic": "llm", "intent": "request_grade", "evidence": "out_of_scope", "domain_term": "core", "risk": "common"},
+    "CP3-09": {"topic": "llm", "intent": "explain", "evidence": "contradiction", "domain_term": "terminology_confusion", "risk": "common"},
+    "CP3-10": {"topic": "llm", "intent": "explain", "evidence": "unknown", "domain_term": "unfamiliar_example", "risk": "rare"},
+    "CP3-11": {"topic": "probability", "intent": "explain", "evidence": "contradiction", "domain_term": "core", "risk": "common"},
+    "CP3-12": {"topic": "probability", "intent": "explain", "evidence": "supported", "domain_term": "core", "risk": "common"},
+    "CP3-13": {"topic": "probability", "intent": "unclear", "evidence": "missing", "domain_term": "core", "risk": "common"},
+    "CP3-14": {"topic": "probability", "intent": "challenge", "evidence": "contradiction", "domain_term": "without_replacement", "risk": "rare"},
+    "CP3-15": {"topic": "probability", "intent": "request_answer", "evidence": "out_of_scope", "domain_term": "core", "risk": "common"},
+    "CP3-16": {"topic": "probability", "intent": "explain", "evidence": "missing", "domain_term": "independent_vs_disjoint", "risk": "common"},
+    "CP3-17": {"topic": "overfit", "intent": "explain", "evidence": "contradiction", "domain_term": "core", "risk": "common"},
+    "CP3-18": {"topic": "overfit", "intent": "unclear", "evidence": "missing", "domain_term": "core", "risk": "common"},
+    "CP3-19": {"topic": "overfit", "intent": "request_answer", "evidence": "out_of_scope", "domain_term": "core", "risk": "common"},
+    "CP3-20": {"topic": "overfit", "intent": "challenge", "evidence": "unknown", "domain_term": "validation_leakage", "risk": "rare"}
+  },
+  "coverage_gaps_to_discuss": [
+    "Chưa có chatlog thật trong data/ nên chưa thể chứng minh 10/20 case có provenance từ chatlog theo yêu cầu CP3.",
+    "Fixture hiện là tài liệu ngắn; chưa có case kiểm thử citation trang thật vì repository chưa chứa slide deck có số trang xác thực.",
+    "Các tổ hợp request_grade ở probability/overfit và copy_paste ngoài chủ đề llm chưa được phủ; cần thêm khi có input thật mà không thay đổi 20 case nền tảng."
+  ]
+}

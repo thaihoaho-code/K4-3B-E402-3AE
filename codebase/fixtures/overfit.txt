@@ -1,0 +1,3 @@
+Overfitting xảy ra khi mô hình khớp quá sát dữ liệu huấn luyện, kể cả nhiễu, và khái quát kém trên dữ liệu chưa thấy.
+Cần đánh giá trên dữ liệu tách biệt với dữ liệu huấn luyện. Kết quả huấn luyện cao chưa đủ để kết luận khả năng khái quát tốt.
+Các hướng giảm overfitting gồm regularization, early stopping, điều chỉnh độ phức tạp và cải thiện dữ liệu.

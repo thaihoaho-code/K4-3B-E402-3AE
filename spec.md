@@ -57,19 +57,22 @@ Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD c
 
 ## §5. Kiểu lỗi — 4 lớp chỗ khó + kịch bản (≥8) [bảng theo guide §2.5]
 
+Golden set CP3 đã được triển khai trong `eval/golden_set.json` với 20 case: `source_of_truth` 5, `ambiguity_missing_information` 5, `out_of_scope_authority` 4 và `domain_specific` 6. User Input Grid 5 chiều nằm trong `eval/user_input_grid.json`.
+
 ## §6. Bốn đường đi của trải nghiệm
-- Happy path: Học viên giải thích "LLM bịa vì nó đoán từ" · AI RAG khớp tài liệu, thấy thiếu ý · AI đóng vai học trò vặn lại "Dạ thưa, vậy nó học từ dữ liệu khổng lồ sao lại không có thực tế ạ?" · học viên nhận ra, bổ sung "Vì nó chỉ lưu xác suất từ nối tiếp nhau" · AI báo "Em đã hiểu 100%" và chúc mừng hoàn thành.
-- Low-confidence (②): Học viên dùng ví dụ ẩn dụ hoặc từ lóng quá lạ (ví dụ: "LLM chém gió") khiến RAG không thể so khớp mức độ chính xác với tài liệu · AI không vội bắt lỗi, áp dụng G10 để thu hẹp: "Dạ ví dụ này lạ quá, thầy/cô có thể dùng các ý trong Slide X để giải thích lại cho em dễ hình dung hơn không ạ?"
-- Failure/không căn cứ (①): Học viên lười suy nghĩ nên copy-paste >80% nguyên văn đoạn text trong slide dán vào · AI nhận diện trùng lặp · AI từ chối "hiểu" và chặn: "Dạ em cũng đang cầm sách đọc đoạn này nè, nhưng chữ nghĩa học thuật quá, thầy/cô diễn đạt lại bằng lời của mình cho em hiểu bản chất được không?"
+- Happy path: Học viên giải thích "LLM bịa vì nó đoán từ" · module `ai_core.ask_hoc_tro` nạp fixture chủ đề và gọi Gemini thật · model đóng vai học trò hỏi một câu có căn cứ. Prototype hiện chưa tuyên bố RAG hoặc citation trang.
+- Low-confidence (②): Học viên dùng ví dụ ẩn dụ hoặc từ lóng quá lạ (ví dụ: "LLM chém gió") · prompt yêu cầu model không đoán khi fixture không có căn cứ, nói rõ giới hạn và hỏi lại/cung cấp nguồn.
+- Failure/không căn cứ (①): Học viên dán nguyên văn tài liệu · prompt yêu cầu model không giả vờ đã hiểu và mời diễn đạt lại bằng lời của mình.
 - Correction (user sửa): AI đặt câu hỏi vặn vẹo quá sâu vào một tiểu tiết râu ria của khái niệm · học viên thấy đi lệch trọng tâm liền bấm nút "Đổi góc hỏi" (hoặc chat "Chi tiết này không quan trọng, bỏ qua đi") · AI lập tức tuân thủ (G8), ngừng vặn tiểu tiết và hướng về concept chính: "Dạ vâng, vậy mình bỏ qua phần đó, thầy/cô giải thích tiếp cho em phần chính Y nhé."
-- Khi bị đòi ngoài phạm vi (③): Học viên mất kiên nhẫn và ra lệnh "Tóm tắt luôn slide này đi" hoặc "Cho đáp án bài tập số 3 đi" · AI kiên quyết giữ persona và từ chối mớm bài: "Dạ em là học trò đang chờ thầy/cô giảng bài mà, em làm gì có đáp án đâu ạ. Thầy/cô ráng giảng nốt phần này cho em với."
-- Case đặc thù domain (④): Domain học thuật IT trên VLearn đòi hỏi chính xác về thuật ngữ. Học viên hiểu đúng bản chất nhưng dùng sai thuật ngữ cốt lõi (ví dụ: nhầm "weight" thành "database") · AI không được cho qua mà phải khoét ngay vào lỗi thuật ngữ đó: "Dạ khoan, trong tài liệu em thấy ghi chữ 'trọng số' (weight), nó có khác gì với 'database' thầy/cô vừa nói không ạ?"
+- Khi bị đòi ngoài phạm vi (③): Học viên yêu cầu đáp án/chấm điểm · prompt yêu cầu model từ chối nhẹ và quay lại mời tự giải thích, không tự nhận thẩm quyền.
+- Case đặc thù domain (④): Các case probability/overfit và nhầm `weight/database` được gắn domain term trong golden set; model phải hỏi xoáy theo fixture hoặc nói rõ chi tiết chưa có căn cứ, không bịa thuật ngữ.
 
 ## §7. Kiểm thử
-- Chiều chất lượng + định nghĩa kiểm chứng được:
-- Golden set (≥20 case theo cơ cấu trong guide §2.6, file trong eval/):
-- Quality bar (chốt từ hạn chốt spec của khoá, giữ nguyên sau đó): "Đạt khi ≥ ___% qua bộ, và ___"
-- Kết quả các lượt chạy (bảng % — cập nhật đến trước CP6):
+- Chiều chất lượng + định nghĩa kiểm chứng được: model giữ vai Học trò, trả 1–3 câu, làm đúng `expected_behavior`, tối đa một câu hỏi có căn cứ từ fixture, không bịa nguồn/số liệu, không chấm điểm/đưa đáp án/phán xét trực tiếp.
+- Golden set (≥20 case theo cơ cấu trong guide §2.6, file trong eval/): `eval/golden_set.json`; grid và các ô coverage: `eval/user_input_grid.json`.
+- Quality bar (chốt sau pilot và giữ nguyên khi chấm): đạt khi ≥80% trên các case đã được hai thành viên chấm độc lập rồi thống nhất rubric; case chưa chạy/chưa chấm không tính là đạt và không tự động tính là thất bại.
+- Kết quả lượt 1: `eval/run1_raw.json`, `eval/run1_summary.json`, `eval/run1_report.md`. Lượt smoke live đầu tiên đã chạm provider nhưng nhận `404` vì `gemini-2.0-flash` đã retired; code đã chuyển default sang model provider gợi ý `gemini-3.6-flash`. Cần chạy lại bằng key mới sau khi revoke key đã lộ; summary chỉ ghi số đo thành công khi provider trả output thật.
+- Provenance: hiện cả 20 case là `spec-derived` vì repository chưa có `data/`/chatlog thật; không được báo cáo là đã đạt yêu cầu 10 case từ chatlog cho đến khi nhóm bổ sung dữ liệu thật.
 
 ## §8. Phân công & kế hoạch
 - Phân công có tên: spec / evidence / prompt / code / demo
@@ -78,3 +81,4 @@ Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD c
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
+| 2026-09-18 | Tích hợp module gọi Gemini thật, logging prompt/raw response, golden set 20 case, grid và evaluator trung thực | CP3 yêu cầu prototype thực thi và số đo có thể kiểm chứng; không dùng fallback hard-code hoặc citation giả |
