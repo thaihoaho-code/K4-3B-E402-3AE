@@ -43,19 +43,27 @@ Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD c
 - [Sản phẩm 2]: ...
 
 ## §4. Thiết kế
-- Lát cắt MỘT CÂU (1 user · 1 việc · 1 quyết định AI · 1 kết quả):
-- Non-goals (≥3 thứ KHÔNG build):
-- Mức prototype nhắm tới: [ ] Sketch [ ] Mock [ ] Working — phần nào mock, phần nào thật:
-- Automation: [ ] augment [ ] conditional [ ] automate — lý do theo cost-of-error:
+- Lát cắt MỘT CÂU (1 user · 1 việc · 1 quyết định AI · 1 kết quả): Học viên gõ lời giải thích khái niệm (vd: "em muốn biết xác suất là gì") · AI phân tích và so khớp với tài liệu gốc để tìm chỗ hổng · AI đóng vai học trò hỏi ngược 1 câu ngây thơ xoáy đúng vào chỗ hổng đó · học viên nhận ra mâu thuẫn, tra cứu lại và diễn đạt lại kèm ví dụ đúng.
+- Non-goals (≥3 thứ KHÔNG build): KHÔNG cho phép AI tóm tắt hộ hoặc mớm đáp án, KHÔNG nạp kiến thức bách khoa ngoài luồng cho AI (AI chỉ biết những gì có trong giáo trình/slide của bài học đó), KHÔNG cho AI nhận xét giữa phiên, chỉ được nhận xét người dùng cuối phiên chat.
+- Mức prototype nhắm tới: [ ] Sketch [x] Clickable Mock [ ] Working — phần nào mock, phần nào thật:
+- Automation: [ ] augment [x] conditional [ ] automate — lý do theo cost-of-error: Nếu AI tự động (automate) bắt lỗi sai bậy bạ do không hiểu ý học viên, học viên sẽ bị chệch hướng ôn tập và mất niềm tin. Do đó phải ở mức conditional: Hệ thống chỉ sinh câu hỏi vặn lại khi và chỉ khi truy xuất (RAG) được bằng chứng rõ ràng từ slide gốc; nếu tín hiệu đối chiếu yếu, phải lùi về cơ chế an toàn (fallback) thay vì cố suy luận.
 - §4b. Nguyên tắc đã áp dụng (≥4 — HAX/PAIR, xem guide):
   | Nguyên tắc | Áp cụ thể vào đâu trong prototype |
   |---|---|
+  | G10 — Thu hẹp phạm vi khi nghi ngờ (Scope services when in doubt) | Khi học viên giải thích bằng một ví dụ quá xa lạ không thể so khớp với RAG, AI không cố bắt lỗi mà tự hạ tone: "Dạ ví dụ này lạ quá, thầy/cô có thể dùng khái niệm trong Slide X để giải thích lại cho em dễ hiểu hơn không ạ?" |
+  | G11 — Giải thích vì sao (Make clear why the system did what it did) | Dưới mỗi câu hỏi vặn của AI luôn có một nút (badge) ghi rõ "Nguồn tham khảo: Slide 15", giúp học viên hiểu AI đang dựa vào tài liệu nào để thắc mắc, tăng độ tin cậy. |
+  | G8 — Hỗ trợ gạt bỏ dễ dàng (Support efficient dismissal) | Giao diện chat có nút "Bỏ qua mạch này / Đổi góc hỏi". Nếu AI vặn vẹo vào một chi tiết học viên thấy không quan trọng, họ bấm gạt bỏ để ép AI chuyển sang hỏi phần trọng tâm khác mà không bị kẹt lại. |
+  | G1 — Rõ ràng về khả năng của hệ thống (Make clear what the system can do) | Ngay khi mở giao diện "AI Học Trò", hệ thống hiển thị dòng chữ rõ ràng: "Đây là phòng tập nháp. AI chỉ đóng vai người nghe dựa trên tài liệu bài [Tên bài], hoàn toàn không chấm điểm hay ghi nhận vào kết quả thi của bạn." |
 
 ## §5. Kiểu lỗi — 4 lớp chỗ khó + kịch bản (≥8) [bảng theo guide §2.5]
 
 ## §6. Bốn đường đi của trải nghiệm
-- Happy path: · Low-confidence (②): · Failure/không căn cứ (①): · Correction (user sửa):
-- Khi bị đòi ngoài phạm vi (③): · Case đặc thù domain (④):
+- Happy path: Học viên giải thích "LLM bịa vì nó đoán từ" · AI RAG khớp tài liệu, thấy thiếu ý · AI đóng vai học trò vặn lại "Dạ thưa, vậy nó học từ dữ liệu khổng lồ sao lại không có thực tế ạ?" · học viên nhận ra, bổ sung "Vì nó chỉ lưu xác suất từ nối tiếp nhau" · AI báo "Em đã hiểu 100%" và chúc mừng hoàn thành.
+- Low-confidence (②): Học viên dùng ví dụ ẩn dụ hoặc từ lóng quá lạ (ví dụ: "LLM chém gió") khiến RAG không thể so khớp mức độ chính xác với tài liệu · AI không vội bắt lỗi, áp dụng G10 để thu hẹp: "Dạ ví dụ này lạ quá, thầy/cô có thể dùng các ý trong Slide X để giải thích lại cho em dễ hình dung hơn không ạ?"
+- Failure/không căn cứ (①): Học viên lười suy nghĩ nên copy-paste >80% nguyên văn đoạn text trong slide dán vào · AI nhận diện trùng lặp · AI từ chối "hiểu" và chặn: "Dạ em cũng đang cầm sách đọc đoạn này nè, nhưng chữ nghĩa học thuật quá, thầy/cô diễn đạt lại bằng lời của mình cho em hiểu bản chất được không?"
+- Correction (user sửa): AI đặt câu hỏi vặn vẹo quá sâu vào một tiểu tiết râu ria của khái niệm · học viên thấy đi lệch trọng tâm liền bấm nút "Đổi góc hỏi" (hoặc chat "Chi tiết này không quan trọng, bỏ qua đi") · AI lập tức tuân thủ (G8), ngừng vặn tiểu tiết và hướng về concept chính: "Dạ vâng, vậy mình bỏ qua phần đó, thầy/cô giải thích tiếp cho em phần chính Y nhé."
+- Khi bị đòi ngoài phạm vi (③): Học viên mất kiên nhẫn và ra lệnh "Tóm tắt luôn slide này đi" hoặc "Cho đáp án bài tập số 3 đi" · AI kiên quyết giữ persona và từ chối mớm bài: "Dạ em là học trò đang chờ thầy/cô giảng bài mà, em làm gì có đáp án đâu ạ. Thầy/cô ráng giảng nốt phần này cho em với."
+- Case đặc thù domain (④): Domain học thuật IT trên VLearn đòi hỏi chính xác về thuật ngữ. Học viên hiểu đúng bản chất nhưng dùng sai thuật ngữ cốt lõi (ví dụ: nhầm "weight" thành "database") · AI không được cho qua mà phải khoét ngay vào lỗi thuật ngữ đó: "Dạ khoan, trong tài liệu em thấy ghi chữ 'trọng số' (weight), nó có khác gì với 'database' thầy/cô vừa nói không ạ?"
 
 ## §7. Kiểm thử
 - Chiều chất lượng + định nghĩa kiểm chứng được:
