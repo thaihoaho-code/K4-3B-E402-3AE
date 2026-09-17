@@ -1,6 +1,0 @@
-.env
-logs/
-*.csv
-data/
-__pycache__/
-*.py[cod]
