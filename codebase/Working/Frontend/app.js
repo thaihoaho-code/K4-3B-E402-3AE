@@ -3,6 +3,96 @@
 const $ = id => document.getElementById(id);
 let catalog = [], current = null, turns = 0, pending = null, asked = new Set(), history = [];
 let noteSession = null, savingNote = false;
+const UPLOAD_TOPIC_ENDPOINT = '/topics/from-slides';
+let selectedPdf = null, uploadController = null, topicsLoading = true;
+
+function renderTopics() {
+  $('topics').replaceChildren();
+  catalog.forEach(topic => {
+    const button = document.createElement('button'); button.className = 'topic-button';
+    const icon = document.createElement('span'); icon.textContent = '▤';
+    button.append(icon, document.createTextNode(topic.title)); button.onclick = () => start(topic); $('topics').append(button);
+  });
+}
+function updateUpload() {
+  $('upload-topic').disabled = !selectedPdf || uploadController !== null || topicsLoading;
+  $('upload-topic').setAttribute('aria-busy', String(uploadController !== null));
+}
+function fallbackTopicId(filename) {
+  let hash = 2166136261;
+  for (const char of filename.normalize('NFC')) hash = Math.imul(hash ^ char.codePointAt(0), 16777619);
+  return 'frontend-upload-' + (hash >>> 0).toString(16);
+}
+function normalizeUploadedTopic(payload, filename) {
+  const topic = payload?.topic ?? payload;
+  if (!topic || typeof topic !== 'object' || Array.isArray(topic) || typeof topic.title !== 'string' || !topic.title.trim()
+      || !Array.isArray(topic.slides) || !topic.slides.length || topic.slides.length > PDF_LIMITS.pages) {
+    throw new Error('Backend trả về chủ đề không hợp lệ (cần title và slides).');
+  }
+  const rawId = topic.topic_id ?? topic.id;
+  const missingId = rawId == null || rawId === '';
+  if (!missingId && (typeof rawId !== 'string' || !rawId.trim())) throw new Error('Backend trả về mã chủ đề không hợp lệ.');
+  let total = 0;
+  const refs = new Set();
+  const slides = topic.slides.map(slide => {
+    if (!slide || typeof slide.slide_ref !== 'string' || !slide.slide_ref.trim() || typeof slide.text !== 'string') throw new Error('Backend trả về slide không hợp lệ.');
+    const ref = slide.slide_ref.trim();
+    if (refs.has(ref)) throw new Error('Backend trả về số slide bị trùng.');
+    refs.add(ref); total += slide.text.length;
+    if (total > PDF_LIMITS.text) throw new Error('Nội dung backend trả về vượt giới hạn ký tự.');
+    return { slide_ref: ref, text: slide.text };
+  });
+  if (!slides.some(slide => slide.text.trim())) throw new Error('Backend trả về chủ đề không có nội dung văn bản.');
+  return { topic: { id: missingId ? fallbackTopicId(filename) : rawId.trim(), title: topic.title.trim(), slides }, missingId };
+}
+$('pdf-file').onchange = () => {
+  uploadController?.abort(); uploadController = null;
+  const file = $('pdf-file').files[0]; selectedPdf = null;
+  $('pdf-pages').textContent = 'Số trang: —';
+  $('pdf-filename').textContent = file?.name || 'Chưa chọn file';
+  $('upload-status').textContent = '';
+  if (file) {
+    try { validatePdfFile(file); selectedPdf = file; $('upload-status').textContent = 'Đã chọn PDF. Nhấn “Tải slide lên” để tiếp tục.'; }
+    catch (error) { $('upload-status').textContent = error.message; }
+  }
+  $('pdf-file').value = ''; updateUpload();
+};
+$('upload-topic').onclick = async () => {
+  if (!selectedPdf || uploadController || topicsLoading) return;
+  const file = selectedPdf, controller = new AbortController(); uploadController = controller;
+  const timeout = setTimeout(() => controller.abort(), 90000);
+  updateUpload(); $('upload-status').textContent = 'Đang đọc PDF…';
+  try {
+    const extractedData = await extractPdfSlides(file, { signal: controller.signal, onProgress: (page, count) => {
+      if (uploadController !== controller) return;
+      $('pdf-pages').textContent = `Số trang: ${count}`;
+      $('upload-status').textContent = `Đang đọc PDF… ${page}/${count} trang`;
+    } });
+    if (uploadController !== controller) return;
+    if (controller.signal.aborted) throw new DOMException('Timeout', 'AbortError');
+    $('upload-status').textContent = 'Đã trích xuất thành công. Đang gửi dữ liệu lên backend…';
+    const response = await fetch(UPLOAD_TOPIC_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(extractedData), signal: controller.signal });
+    if (!response.ok) throw new Error(`Không thể tạo chủ đề (HTTP ${response.status}). Hãy kiểm tra endpoint ${UPLOAD_TOPIC_ENDPOINT}.`);
+    let payload;
+    try { payload = await response.json(); } catch { throw new Error('Backend trả về JSON không hợp lệ.'); }
+    if (uploadController !== controller) return;
+    if (controller.signal.aborted) throw new DOMException('Timeout', 'AbortError');
+    const result = normalizeUploadedTopic(payload, file.name);
+    if (catalog.some(topic => topic.id === result.topic.id)) throw new Error('Mã chủ đề backend trả về đã tồn tại. Chủ đề hiện tại được giữ nguyên.');
+    catalog.push(result.topic); renderTopics(); start(result.topic);
+    $('upload-status').textContent = result.missingId
+      ? 'Đã mở tài liệu. Cảnh báo: backend thiếu topic_id/id; đang dùng ID fallback chỉ ở frontend. /chat có thể từ chối vì backend chưa đăng ký ID này.'
+      : 'Đã trích xuất và tạo chủ đề thành công. Bạn có thể bắt đầu giảng bài.';
+    selectedPdf = null;
+  } catch (error) {
+    if (uploadController !== controller) return;
+    $('upload-status').textContent = controller.signal.aborted ? 'Xử lý PDF quá lâu. Bạn có thể thử lại hoặc chọn file nhỏ hơn.' : `Chưa tải được slide. ${error.message}`;
+  } finally {
+    clearTimeout(timeout);
+    if (uploadController === controller) { uploadController = null; $('pdf-file').value = ''; updateUpload(); }
+  }
+};
 
 function openReference(topic, slideRef = null) {
   if (!topic) return;
@@ -193,6 +283,12 @@ $('message').oninput = updateProgress;
 $('message').onkeydown = event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); send(); } };
 $('reset').onclick = () => current ? start(current) : loadTopics();
 $('open-reference').onclick = () => openReference(current);
+$('finish').onclick = () => {
+  if (!current || savingNote) return;
+  noteSession = { topic_id: current.id, turns };
+  $('summary-text').textContent = `Chủ đề: ${current.title} · ${turns} lượt chia sẻ`;
+  $('reflection').value = ''; $('save-status').textContent = ''; $('summary-dialog').showModal();
+};
 $('save-note').onclick = async () => {
   if (savingNote || !noteSession) return;
   const reflection = $('reflection').value.trim();
@@ -212,6 +308,7 @@ document.querySelectorAll('dialog').forEach(dialog => { dialog.querySelectorAll(
 
 
 async function loadTopics() {
+  topicsLoading = true; updateUpload();
   current = null; updateProgress(); $('reset').disabled = true;
   $('thread-status').textContent = 'Đang tải chủ đề…';
   try {
@@ -230,16 +327,11 @@ async function loadTopics() {
       return { id, title, slides };
     });
     if (new Set(catalog.map(topic => topic.id)).size !== catalog.length) throw new Error('Mã chủ đề bị trùng');
-    $('topics').replaceChildren();
-    catalog.forEach(topic => {
-      const button = document.createElement('button'); button.className = 'topic-button';
-      const icon = document.createElement('span'); icon.textContent = '▤';
-      button.append(icon, document.createTextNode(topic.title)); button.onclick = () => start(topic); $('topics').append(button);
-    });
+    renderTopics();
     start(catalog[0]);
   } catch (error) {
     $('topic-title').textContent = 'Chưa tải được chủ đề';
     $('thread-status').textContent = `Không thể tải tài liệu (${error.message}). Nhấn Buổi học mới để thử lại.`;
-  } finally { $('reset').disabled = false; updateProgress(); }
+  } finally { topicsLoading = false; updateUpload(); $('reset').disabled = false; updateProgress(); }
 }
 loadTopics();

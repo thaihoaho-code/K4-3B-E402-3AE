@@ -1033,3 +1033,17 @@ dialog { max-height: calc(100dvh - 32px); overflow-y: auto; }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* PDF upload and untrusted long filenames remain within the viewport. */
+.pdf-upload { min-width: 0; overflow-wrap: anywhere; }
+.pdf-upload h3 { margin: 0 0 14px; font-size: 14px; }
+.pdf-upload label { display: block; margin-bottom: 8px; font-size: 12px; }
+.pdf-upload input { display: block; width: 100%; min-width: 0; max-width: 100%; font: inherit; font-size: 11px; }
+.pdf-upload p, #pdf-filename, #pdf-pages { font-size: 11px; line-height: 1.7; margin: 10px 0; }
+#pdf-limits { color: #71816f; }
+#upload-topic { width: 100%; white-space: normal; min-height: 40px; }
+#upload-topic:disabled { opacity: .5; cursor: default; }
+#upload-status { color: #47634e; }
+#reference-body { overflow-wrap: anywhere; }
+.topic-button { overflow-wrap: anywhere; }
+@media (max-width: 700px) { .topic-button { max-width: 85vw; white-space: normal; } }

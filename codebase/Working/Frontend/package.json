@@ -1,0 +1,10 @@
+{
+  "name": "vlearn-frontend",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/copy-pdfjs.cjs",
+    "test": "node ../tests/frontend.cjs"
+  },
+  "dependencies": { "pdfjs-dist": "6.3.289" },
+  "devDependencies": { "playwright": "^1.58.0" }
+}

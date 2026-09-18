@@ -63,6 +63,16 @@
         <div class="mock-note">✧ Phản hồi theo kịch bản mẫu · Chưa kết nối AI hoặc RAG</div>
       </section>
       <aside class="right-panel">
+        <section class="panel pdf-upload" aria-labelledby="upload-heading">
+          <h3 id="upload-heading">Học với slide của bạn</h3>
+          <label for="pdf-file">Chọn file PDF</label>
+          <input id="pdf-file" type="file" accept="application/pdf" aria-describedby="pdf-limits">
+          <p id="pdf-limits">Tối đa 20 MB · 100 trang · 1.000.000 ký tự. PDF dạng ảnh chưa được hỗ trợ.</p>
+          <div id="pdf-filename">Chưa chọn file</div>
+          <div id="pdf-pages">Số trang: —</div>
+          <button id="upload-topic" class="button primary" type="button" disabled>Tải slide lên</button>
+          <p id="upload-status" role="status" aria-live="polite"></p>
+        </section>
         <section class="journey panel">
           <div class="panel-label">MỘT VÒNG HỌC SÂU <span>↗</span></div>
           <h2>Chậm một chút.<br>Hiểu thêm nhiều.</h2>
@@ -82,8 +92,7 @@
         <section class="panel resources">
           <div class="resource-icon">▤</div>
           <h3>Cần nhìn lại kiến thức?</h3>
-          <p>Mở tài liệu khi bạn muốn tự tìm hiểu thêm.</p><button id="open-reference" class="text-button">Xem tài liệu
-            mẫu <span>↗</span></button>
+          <p>Mở tài liệu khi bạn muốn tự tìm hiểu thêm.</p><button id="open-reference" class="text-button">Xem toàn bộ slide <span>↗</span></button>
         </section>
         <details class="panel demo-controls">
           <summary>Thử tình huống mô phỏng</summary>
@@ -99,7 +108,7 @@
     <div class="dialog-top"><span class="eyebrow">GÓC TÀI LIỆU</span><button class="close"
         aria-label="Đóng tài liệu">×</button></div>
     <h2 id="reference-title"></h2>
-    <p class="dialog-subtitle">Nội dung biên soạn cho bản mock, không phải kết quả truy xuất RAG.</p>
+    <p class="dialog-subtitle">Nội dung từ tài liệu của chủ đề đang xem.</p>
     <div id="reference-body"></div><button class="button primary close-action">Quay lại và thử giải thích</button>
   </dialog>
   <dialog id="summary-dialog">
@@ -111,6 +120,7 @@
     <p class="dialog-subtitle">Ghi chú được lưu trên trình duyệt này khi bộ nhớ khả dụng.</p><button id="save-note"
       class="button primary">Lưu ghi chú</button><span id="save-status" role="status"></span>
   </dialog>
+  <script src="pdf-upload.js"></script>
   <script src="app.js"></script>
 </body>
 
