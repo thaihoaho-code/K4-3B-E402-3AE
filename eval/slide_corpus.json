@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Prompt và Cách LLM Hiểu Yêu cầu",
+    "slides": [
+      {
+        "slide_ref": "Slide 25",
+        "text": "Prompt là phần thông tin đầu vào dùng để hướng dẫn LLM thực hiện một nhiệm vụ. Prompt càng rõ về mục tiêu, bối cảnh và đầu ra mong muốn thì model càng dễ trả lời đúng hướng."
+      },
+      {
+        "slide_ref": "Slide 26",
+        "text": "System prompt có mức ưu tiên cao hơn user prompt, thường được dùng để xác định vai trò, nguyên tắc và cách ứng xử chung của chatbot."
+      },
+      {
+        "slide_ref": "Slide 27",
+        "text": "Few-shot prompting cung cấp một vài ví dụ input-output để model nhận ra pattern cần làm theo thay vì chỉ mô tả yêu cầu bằng lời."
+      }
+    ],
+    "topic_id": "prompting_basics"
+  },
+  {
+    "title": "Temperature và Quá trình Sinh Token",
+    "slides": [
+      {
+        "slide_ref": "Slide 28",
+        "text": "Temperature điều chỉnh mức độ phân tán của xác suất token: temperature thấp làm model ưu tiên các lựa chọn có xác suất cao, còn temperature cao làm đầu ra đa dạng hơn."
+      },
+      {
+        "slide_ref": "Slide 29",
+        "text": "Temperature bằng 0 thường cho kết quả ổn định hơn trong các tác vụ cần tính nhất quán, nhưng không có nghĩa model sẽ luôn trả về câu trả lời chính xác."
+      },
+      {
+        "slide_ref": "Slide 30",
+        "text": "Khi temperature tăng, các token ít có khả năng được chọn sẽ có thêm cơ hội xuất hiện, giúp nội dung sáng tạo hơn nhưng cũng làm tăng độ khó đoán của đầu ra."
+      }
+    ],
+    "topic_id": "temperature_sampling"
+  },
+  {
+    "title": "Hallucination và Giới hạn Kiến thức",
+    "slides": [
+      {
+        "slide_ref": "Slide 31",
+        "text": "LLM tạo câu trả lời dựa trên xác suất token chứ không trực tiếp kiểm tra xem mỗi thông tin có đúng với thế giới thực hay không."
+      },
+      {
+        "slide_ref": "Slide 32",
+        "text": "Hallucination xảy ra khi model tạo ra thông tin nghe hợp lý và tự tin nhưng thực tế không chính xác hoặc không có căn cứ."
+      },
+      {
+        "slide_ref": "Slide 33",
+        "text": "Với các thông tin quan trọng hoặc cần cập nhật, nên kết hợp LLM với nguồn dữ liệu bên ngoài, công cụ tìm kiếm hoặc RAG để có cơ sở kiểm chứng câu trả lời."
+      }
+    ],
+    "topic_id": "hallucination_limits"
+  }
+]
