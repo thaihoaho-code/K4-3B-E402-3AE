@@ -43,21 +43,22 @@ def load_or_build_cache():
     return corpus, embeddings
 
 def retrieve(user_text: str, topic_id: str) -> RetrieveResult:
-    """So sánh câu hỏi với vector slide, trả về slide liên quan nhất"""
     corpus, embeddings = load_or_build_cache()
     if not corpus:
-        return RetrieveResult(gap="Chưa có dữ liệu", slide_ref="Không có", confidence=0.0)
+        return RetrieveResult(gap="", slide_text="Chua co du lieu", slide_ref="Khong co", confidence=0.0)
 
-    # 1. Biến câu hỏi thành vector
+    topic_indices = [i for i, c in enumerate(corpus) if c["topic_id"] == topic_id]
+    if not topic_indices:
+        return RetrieveResult(gap="", slide_text="Chua co du lieu", slide_ref="Khong co", confidence=0.0)
+
     user_emb = get_embedding(user_text)
     
-    # 2. Tính độ tương đồng Cosine (Cosine Similarity)
-    norms = np.linalg.norm(embeddings, axis=1) * np.linalg.norm(user_emb)
-    similarities = np.dot(embeddings, user_emb) / norms
+    topic_embeddings = embeddings[topic_indices]
+    norms = np.linalg.norm(topic_embeddings, axis=1) * np.linalg.norm(user_emb)
+    similarities = np.dot(topic_embeddings, user_emb) / norms
     
-    # 3. Lấy slide có điểm cao nhất
     best_idx = np.argmax(similarities)
-    best_slide = corpus[best_idx]
+    best_slide = corpus[topic_indices[best_idx]]
     
     return RetrieveResult(
         gap="", slide_text=best_slide["text"],
