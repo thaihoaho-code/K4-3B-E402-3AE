@@ -45,6 +45,8 @@ Khanmigo (Khan Academy)
 - Đáng học: Không vội đưa đáp án; kết hợp hội thoại với nội dung học tập có sẵn.
 - Đáng né khi áp dụng: Gợi ý quá nhiều khiến người học chỉ đi theo hướng AI dẫn sẵn, chưa thể hiện được khả năng tự giải thích.
 - Mình khác gì: Nhóm tập trung vào lúc người học vừa học xong và muốn kiểm tra mình hiểu đến đâu. Người học chủ động giảng lại; AI đóng vai học trò, dùng slide của khóa học để hỏi vào phần chưa rõ. Nhóm kiểm soát nội dung đưa vào từng lượt. 
+
+
 Claude Projects
 
 - Flow: Người dùng tạo project, thêm tài liệu và hướng dẫn riêng, sau đó trò chuyện với AI dựa trên ngữ cảnh đó.
