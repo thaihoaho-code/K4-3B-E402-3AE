@@ -1,0 +1,13 @@
+| Ai thử                            | Giao task gì                                                      | Kẹt ở đâu / quan sát                                               | Quote minh họa — chưa phải bằng chứng thật              | Quyết định dự kiến                                                                           |
+| --------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Phan Ngọc Hòa, lớp level 2 | Đọc slide về token, đóng tài liệu rồi giải thích lại cho chatbot. | Chưa hiểu mình phải giảng lại hay đặt câu hỏi cho AI.              | “ủa mình hỏi nó hay mình phải giải thích cho nó?”       | Thêm hướng dẫn đầu màn hình |
+| Nguyễn Đăng Tuấn Huy, lớp level 2 | Giải thích sự khác nhau giữa các bước huấn luyện AI.              | Chatbot nói sẵn ý trả lời rồi hỏi xác nhận.                        | “nó nói hết rồi thì mình chỉ cần bảo đúng thôi à”       | Sửa ví dụ trong prompt, yêu cầu hỏi mở và không liệt kê sẵn đáp án.                          |
+| Lê Minh Sang, cùng lớp E402              | Trả lời câu hỏi của chatbot. | Muốn kiểm tra nguồn nhưng chưa biết tìm slide được nhắc đến ở đâu. | “slide 20 là chỗ nào, có xem được không?             | Thêm cách mở hoặc hiển thị slide tương ứng ngay cạnh cuộc trò chuyện.                        |
+| Nguyễn Tiến Phát, cùng lớp E402 | Giải thích một khái niệm và chờ chatbot hỏi tiếp.                 | Không biết hệ thống đang xử lý hay chưa nhận tin nhắn.             | “mình gửi rồi mà, có phải bấm lại ko?”                  | Hiển thị trạng thái đang xử lý và hạn chế gửi lặp khi đang chờ.
+| Nguyễn Việt Hoàng, cùng lớp E402 |  Trả lời câu hỏi của chatbot | Muốn tải slide cá nhân lên thay vì chỉ dùng slide có sẵn của hệ thống. | "nếu muốn tải slide thì làm thế nào?" | Bổ sung tính năng tải slide; AI trích xuất khái niệm, cho người dùng kiểm tra trước khi lưu vào kho để ôn tập. |
+
+* **Chủ đề lặp nhiều nhất:** Người dùng chưa rõ cách bắt đầu, trạng thái xử lý và cách mở slide để đối chiếu; cần hướng dẫn và phản hồi giao diện rõ hơn.
+* **Sẽ sửa trước demo:** Thêm hướng dẫn đầu màn hình, trạng thái đang xử lý, cách xem slide liên quan; sửa prompt để chatbot không nói sẵn đáp án.
+* **Giữ nguyên gì và vì sao:** Giữ cách người học giảng lại và chatbot hỏi gợi mở, vì đây là luồng chính giúp người học tự kiểm tra mức độ hiểu bài.
+* **Để dành sau:** Cho phép tải slide cá nhân, dùng AI trích xuất khái niệm và để người dùng kiểm tra trước khi lưu vào kho.
+
