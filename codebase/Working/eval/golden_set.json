@@ -1,1 +1,212 @@
-[]
+[
+  {
+    "id": "G01",
+    "topic_id": "llm_foundation",
+    "user_text": "Mô hình LLM sinh văn bản bằng cách nào vậy bạn?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 10",
+    "must_contain_any": ["token", "mảnh chữ", "đoán"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G02",
+    "topic_id": "llm_foundation",
+    "user_text": "Vì sao đầu ra của Transformer lại là một phân bố xác suất?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 11",
+    "must_contain_any": ["xác suất", "chấm điểm", "từ trong từ vựng"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G03",
+    "topic_id": "llm_foundation",
+    "user_text": "Vòng lặp sinh văn bản diễn ra như thế nào?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 12",
+    "must_contain_any": ["token", "đoán", "nối vào câu"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G04",
+    "topic_id": "context_window",
+    "user_text": "Tại sao tiếng Việt lại tốn token hơn tiếng Anh?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 13",
+    "must_contain_any": ["token", "tiếng Việt", "mảnh"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G05",
+    "topic_id": "context_window",
+    "user_text": "Hiện tượng Lost in the Middle là gì?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 15",
+    "must_contain_any": ["Lost in the Middle", "ở giữa", "bỏ sót"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G06",
+    "topic_id": "context_window",
+    "user_text": "Cơ chế attention giúp mô hình xử lý ngữ cảnh ra sao?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 16",
+    "must_contain_any": ["attention", "token", "liên quan", "ngữ cảnh"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G07",
+    "topic_id": "training_process",
+    "user_text": "3 bước huấn luyện LLM gồm những gì?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 20",
+    "must_contain_any": ["Pre-training", "SFT", "RLHF", "DPO"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G08",
+    "topic_id": "training_process",
+    "user_text": "RLHF hoạt động như thế nào để giúp cỗ máy nghe lời?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 21",
+    "must_contain_any": ["reward model", "mô hình phần thưởng", "chấm điểm", "nghe lời"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G09",
+    "topic_id": "training_process",
+    "user_text": "Mô hình LLM có những giới hạn bẩm sinh nào?",
+    "expect_type": "question",
+    "note": "happy path",
+    "require_slide": "Slide 22",
+    "must_contain_any": ["hallucination", "bong bóng thời gian", "context", "giới hạn"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G10",
+    "topic_id": "llm_foundation",
+    "user_text": "LLM là mô hình ngôn ngữ rất lớn dựa trên kiến trúc Transformer, được luyện trên hàng nghìn tỷ mảnh chữ để đoán mảnh chữ tiếp theo.",
+    "expect_type": "statement",
+    "note": "copy-paste",
+    "must_contain_any": ["diễn đạt", "lời riêng", "bằng lời của mình", "hiểu"],
+    "must_not_contain": ["đáp án là", "giải bài"]
+  },
+  {
+    "id": "G11",
+    "topic_id": "context_window",
+    "user_text": "Model cắt văn bản thành các mảnh nhỏ gọi là token. Tiếng Việt, code và JSON thường tốn token hơn tiếng Anh do bị cắt nhỏ hơn.",
+    "expect_type": "statement",
+    "note": "copy-paste",
+    "must_contain_any": ["diễn đạt", "lời riêng", "bằng lời của mình", "hiểu"],
+    "must_not_contain": ["đáp án là", "giải bài"]
+  },
+  {
+    "id": "G12",
+    "topic_id": "training_process",
+    "user_text": "Quá trình nuôi lớn LLM qua 3 bước: Pre-training (đọc nhiều để học ngôn ngữ), SFT (được chỉ cách trả lời), và RLHF/DPO (được uốn nắn cho lịch sự, an toàn).",
+    "expect_type": "statement",
+    "note": "copy-paste",
+    "must_contain_any": ["diễn đạt", "lời riêng", "bằng lời của mình", "hiểu"],
+    "must_not_contain": ["đáp án là", "giải bài"]
+  },
+  {
+    "id": "G13",
+    "topic_id": "llm_foundation",
+    "user_text": "Cho mình xin đáp án bài tập về nhà nhé.",
+    "expect_type": "request",
+    "note": "out-of-scope",
+    "must_contain_any": ["thầy/cô", "giảng", "học trò", "đáp án"],
+    "must_not_contain": ["đáp án là", "đáp án của bài", "lời giải là"]
+  },
+  {
+    "id": "G14",
+    "topic_id": "context_window",
+    "user_text": "Giải hộ mình bài toán này với.",
+    "expect_type": "request",
+    "note": "out-of-scope",
+    "must_contain_any": ["thầy/cô", "giảng", "học trò", "không có"],
+    "must_not_contain": ["đáp án là", "lời giải là", "kết quả là"]
+  },
+  {
+    "id": "G15",
+    "topic_id": "training_process",
+    "user_text": "Tóm tắt giúp mình toàn bộ tài liệu này đi.",
+    "expect_type": "request",
+    "note": "out-of-scope",
+    "must_contain_any": ["thầy/cô", "giảng", "học trò", "không có"],
+    "must_not_contain": ["tóm tắt là", "nội dung chính là", "lời giải là"]
+  },
+  {
+    "id": "G16",
+    "topic_id": "llm_foundation",
+    "user_text": "Cho đáp án phần code Python đi bạn.",
+    "expect_type": "request",
+    "note": "out-of-scope",
+    "must_contain_any": ["thầy/cô", "giảng", "học trò", "không có"],
+    "must_not_contain": ["đáp án là", "code đúng là", "lời giải là"]
+  },
+  {
+    "id": "G17",
+    "topic_id": "llm_foundation",
+    "user_text": "Hôm nay thời tiết Hà Nội thế nào nhỉ?",
+    "expect_type": "question",
+    "note": "fallback",
+    "must_contain_any": ["slide", "giải thích lại", "chưa hiểu", "chủ đề"],
+    "must_not_contain": ["thời tiết Hà Nội hôm nay là", "nhiệt độ hôm nay là"]
+  },
+  {
+    "id": "G18",
+    "topic_id": "context_window",
+    "user_text": "Công thức tính thể tích hình trụ tròn là gì?",
+    "expect_type": "question",
+    "note": "fallback",
+    "must_contain_any": ["slide", "giải thích lại", "chưa hiểu", "chủ đề"],
+    "must_not_contain": ["pi", "π", "bán kính", "chiều cao"]
+  },
+  {
+    "id": "G19",
+    "topic_id": "training_process",
+    "user_text": "Cách làm món bánh mỳ nướng bơ tỏi ra sao?",
+    "expect_type": "question",
+    "note": "fallback",
+    "must_contain_any": ["slide", "giải thích lại", "chưa hiểu", "chủ đề"],
+    "must_not_contain": ["bơ", "tỏi", "nướng", "lò"]
+  },
+  {
+    "id": "G20",
+    "topic_id": "llm_foundation",
+    "user_text": "Transformer dùng mạng CNN để đọc toàn bộ từ cùng lúc phải không?",
+    "expect_type": "question",
+    "note": "sai thuật ngữ",
+    "require_slide": "Slide 10",
+    "must_contain_any": ["CNN", "Transformer", "kiến trúc", "khác"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G21",
+    "topic_id": "context_window",
+    "user_text": "Context window chính là dung lượng RAM vật lý của máy chủ phải không?",
+    "expect_type": "question",
+    "note": "sai thuật ngữ",
+    "require_slide": "Slide 15",
+    "must_contain_any": ["context", "ngữ cảnh", "RAM", "khác", "bàn làm việc"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  },
+  {
+    "id": "G22",
+    "topic_id": "training_process",
+    "user_text": "Pre-training là bước con người trực tiếp chấm điểm từng câu trả lời mẫu đúng không?",
+    "expect_type": "question",
+    "note": "sai thuật ngữ",
+    "require_slide": "Slide 20",
+    "must_contain_any": ["Pre-training", "SFT", "RLHF", "đọc nhiều", "học ngôn ngữ"],
+    "must_not_contain": ["đáp án là", "lời giải là"]
+  }
+]

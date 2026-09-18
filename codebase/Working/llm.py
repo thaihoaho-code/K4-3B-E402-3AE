@@ -3,14 +3,14 @@ from google import genai
 
 client = genai.Client()
 
-async def generate_content_stream(prompt_text: str):
+async def generate_content_stream(contents, config=None):
     """Gọi Gemini sinh chữ dạng stream (bất đồng bộ)"""
     
     model_name = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
     
     response = await client.aio.models.generate_content_stream(
         model=model_name,
-        contents=prompt_text
+        contents=contents, config=config
     )
     
     async for chunk in response:
