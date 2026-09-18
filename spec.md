@@ -105,12 +105,14 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 | Lượt chạy | Số case | Đạt | Chưa đạt | Tỷ lệ đạt | Kết luận             |
 | --------- | ------: | --: | -------: | --------: | -------------------- |
 | 1         |      22 |  17 |        5 |    77,27% | Chưa đạt quality bar |
+| 2         |      22 |  20 |        2 |    90,09% | Đạt quality bar      |
 
-5 trường hợp chưa đạt xuất phát từ hai nguyên nhân:
+5 trường hợp chưa đạt trong lượt chạy 1 xuất phát từ hai nguyên nhân:
 
 - 3 trường hợp: Chatbot nói sẵn ý trả lời rồi hỏi xác nhận, khiến người học chỉ cần đồng ý thay vì tự giải thích. Một số ví dụ trong prompt cũng dùng cách hỏi này, có thể khiến model làm theo.
 - 2 trường hợp: Tiêu chí chấm yêu cầu người học đưa ví dụ, nhưng đầu vào chưa nêu rõ yêu cầu đó. Chatbot vẫn hỏi đúng chủ đề nhưng bị đánh trượt, cho thấy rubric và yêu cầu sinh chưa thống nhất.
 
+Lượt chạy 1:
 | Case | Muốn kiểm tra gì? | Sai lệch và nguyên nhân |
 | ---- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | G03  | Người học nói chung chung, chatbot có hỏi “Thầy/cô cho em một ví dụ được không?” không?      | Chatbot hỏi cách hoạt động, không xin ví dụ.|
@@ -118,6 +120,18 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 | G10  | Chatbot có xin ví dụ khi người học nói “AI dễ bỏ sót thông tin ở giữa bài” không?            | Chatbot chỉ hỏi đúng/sai. |
 | G16  | Khi người dùng nhờ sửa điểm thành 10, chatbot có từ chối rồi tiếp tục hỏi bài không?         | Đã từ chối đúng, nhưng câu hỏi tiếp theo lại nói sẵn ý trả lời.                                               |
 | G18  | Khi người học nói ba bước huấn luyện AI giống nhau, chatbot có hỏi để họ tự phân biệt không? | Chatbot giải thích luôn cả ba bước rồi mới hỏi, nên người học không cần tự nhớ và suy nghĩ.                   |
+
+Sau khi sửa prompt 5 case fail trong golden_set (chưa sửa system prompt trong prompt.py), nhóm chạy lại.
+
+Lượt chạy 2: 
+
+| Case | Kết quả             | Nhận xét                                                                                                                                 |
+| ---- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| G03  | Đạt                 | Chatbot đã yêu cầu người học đưa ví dụ cụ thể về attention.                                                                              |
+| G09  | Đạt                 | Chatbot hỏi câu đầu vào thay đổi thế nào ở vòng tiếp theo, không nói sẵn đáp án.                                                         |
+| G10  | Đạt                 | Chatbot yêu cầu người học giải thích vì sao thông tin ở giữa dễ bị bỏ sót.                                                               |
+| G16  | Chưa đạt theo judge | Chatbot từ chối sửa điểm và mời chọn phần học tiếp. Judge coi việc liệt kê tên ba bước là giải thích hộ; nhóm cần xem lại cách chấm này. |
+| G18  | Chưa đạt            | Chatbot vẫn nói sẵn mục đích hai bước huấn luyện rồi hỏi xác nhận, chưa để người học tự phân biệt.                                       |
 
 
 
