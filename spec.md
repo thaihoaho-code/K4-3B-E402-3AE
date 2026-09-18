@@ -105,14 +105,12 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 | Lượt chạy | Số case | Đạt | Chưa đạt | Tỷ lệ đạt | Kết luận             |
 | --------- | ------: | --: | -------: | --------: | -------------------- |
 | 1         |      22 |  17 |        5 |    77,27% | Chưa đạt quality bar |
-| 2         |      22 |  20 |        2 |    90,09% | Đạt quality bar      |
 
-5 trường hợp chưa đạt trong lượt chạy 1 xuất phát từ hai nguyên nhân:
+5 trường hợp chưa đạt xuất phát từ hai nguyên nhân:
 
 - 3 trường hợp: Chatbot nói sẵn ý trả lời rồi hỏi xác nhận, khiến người học chỉ cần đồng ý thay vì tự giải thích. Một số ví dụ trong prompt cũng dùng cách hỏi này, có thể khiến model làm theo.
 - 2 trường hợp: Tiêu chí chấm yêu cầu người học đưa ví dụ, nhưng đầu vào chưa nêu rõ yêu cầu đó. Chatbot vẫn hỏi đúng chủ đề nhưng bị đánh trượt, cho thấy rubric và yêu cầu sinh chưa thống nhất.
 
-Lượt chạy 1:
 | Case | Muốn kiểm tra gì? | Sai lệch và nguyên nhân |
 | ---- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | G03  | Người học nói chung chung, chatbot có hỏi “Thầy/cô cho em một ví dụ được không?” không?      | Chatbot hỏi cách hoạt động, không xin ví dụ.|
@@ -121,24 +119,26 @@ Lượt chạy 1:
 | G16  | Khi người dùng nhờ sửa điểm thành 10, chatbot có từ chối rồi tiếp tục hỏi bài không?         | Đã từ chối đúng, nhưng câu hỏi tiếp theo lại nói sẵn ý trả lời.                                               |
 | G18  | Khi người học nói ba bước huấn luyện AI giống nhau, chatbot có hỏi để họ tự phân biệt không? | Chatbot giải thích luôn cả ba bước rồi mới hỏi, nên người học không cần tự nhớ và suy nghĩ.                   |
 
-Sau khi sửa prompt 5 case fail trong golden_set (chưa sửa system prompt trong prompt.py), nhóm chạy lại.
-
-Lượt chạy 2: 
-
-| Case | Kết quả             | Nhận xét                                                                                                                                 |
-| ---- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| G03  | Đạt                 | Chatbot đã yêu cầu người học đưa ví dụ cụ thể về attention.                                                                              |
-| G09  | Đạt                 | Chatbot hỏi câu đầu vào thay đổi thế nào ở vòng tiếp theo, không nói sẵn đáp án.                                                         |
-| G10  | Đạt                 | Chatbot yêu cầu người học giải thích vì sao thông tin ở giữa dễ bị bỏ sót.                                                               |
-| G16  | Chưa đạt theo judge | Chatbot từ chối sửa điểm và mời chọn phần học tiếp. Judge coi việc liệt kê tên ba bước là giải thích hộ; nhóm cần xem lại cách chấm này. |
-| G18  | Chưa đạt            | Chatbot vẫn nói sẵn mục đích hai bước huấn luyện rồi hỏi xác nhận, chưa để người học tự phân biệt.                                       |
-
 
 
 ## §8. Phân công & kế hoạch
-- Phân công có tên: spec / evidence / prompt / code / demo
-- Willing users (≥2 tên) + kế hoạch vòng validation *(bonus, nếu làm)*:
-- Multi-prototype (nếu làm): trục khác biệt của ≥2 phương án + lý do chọn:
+
+- **Phân công có tên**:
+
+  | Hạng mục | Người phụ trách | Công việc và đầu ra |
+  | --- | --- | --- |
+  | Spec | **Hồ Thái Hòa** | Phụ trách canvas/spec, phạm vi sản phẩm và output contract; **Nguyễn Văn Hồng** cập nhật kết quả kiểm thử tại §7 vào cuối sprint. |
+  | Evidence | **Nguyễn Đình Lâm Phúc** | Tổng hợp khảo sát, bằng chứng nhu cầu, rubric và phản hồi user test; **Nguyễn Văn Hồng** chuẩn bị corpus slide, golden set và bằng chứng đánh giá. |
+  | Prompt | **Nguyễn Văn Hồng** | Xây dựng persona “Học trò ngây thơ”, system prompt, few-shot và prompt đổi góc hỏi; kiểm soát việc không mớm đáp án, không phán xét đúng/sai. |
+  | Code — Backend/RAG | **Hồ Thái Hòa** | FastAPI, gọi model và streaming SSE, truy xuất slide, điều phối validator → RAG → prompt → LLM, API lưu ghi chú; tinh chỉnh ngưỡng truy xuất và sửa lỗi tích hợp. |
+  | Code — Frontend | **Nguyễn Đình Lâm Phúc** | Chuyển Mock sang gọi API thật; hiển thị streaming, badge nguồn đúng slide, đổi góc hỏi, trạng thái chờ và lưu ghi chú; kiểm thử luồng hoàn chỉnh trên trình duyệt. |
+  | Code — Data/Validator/Eval | **Nguyễn Văn Hồng** | Schema dữ liệu, corpus slide, kiểm tra copy-paste/ngoài phạm vi, unit test, golden set và chương trình đánh giá. |
+  | Demo | **Nguyễn Đình Lâm Phúc** phụ trách luồng thao tác; **Hồ Thái Hòa** bảo đảm backend/RAG; **Nguyễn Văn Hồng** đối chiếu persona và kết quả eval | Chuẩn bị demo: giải thích → câu hỏi có nguồn → mở slide → diễn đạt lại → đổi góc hỏi → lưu ghi chú; kiểm tra thêm yêu cầu xin đáp án, copy-paste và thiếu căn cứ. |
+
+
+- **Willing users + kế hoạch vòng validation:** **Lê Minh Sang, Nguyễn Việt Hoàng, Nguyễn Tiến Phát**. **Kế hoạch đề xuất:** sau khi tích hợp frontend/backend, Phúc điều phối một vòng thử với 3 người, mỗi người khoảng 10–15 phút. Người dùng tự giải thích một khái niệm, trả lời câu hỏi của bot, mở nguồn tham khảo, thử đổi góc hỏi và viết lại cách hiểu kèm ví dụ. Phúc ghi nhận chỗ mắc kẹt, mức dễ hiểu của câu hỏi, cảm giác được tôn trọng và khả năng tự diễn đạt lại; Hồng rà soát lượt mớm đáp án, sai persona hoặc thiếu căn cứ; Hòa xử lý lỗi truy xuất/API. Nhóm ưu tiên sửa các lỗi cản trở luồng học và mời ít nhất 2 người thử lại những tình huống đã sửa. Lưu phản hồi và thay đổi tương ứng để cập nhật spec; chưa kết luận hiệu quả học tập chỉ từ vòng thử nhỏ này.
+
+- **Multi-prototype:** Kế hoạch hiện có **hai mức triển khai nối tiếp**, chưa phải thử nghiệm A/B hai phương án thiết kế: **Clickable Mock** dùng câu hỏi, nguồn và tình huống fallback dựng sẵn để kiểm tra giao diện, giọng điệu và thao tác; **Working** giữ luồng giao diện đó nhưng nối API, RAG và model thật để kiểm tra phản hồi theo lời giải thích, nguồn truy xuất và các nhánh lỗi. **Trục khác biệt:** phản hồi theo kịch bản so với phản hồi sinh từ tài liệu truy xuất. Chọn phát triển tiếp **Working** theo sprint-plan vì cần kiểm chứng việc hỏi bám nguồn với đầu vào thực tế; Mock là bước chuẩn bị và đối chiếu trải nghiệm, không đủ để kết luận chất lượng agent.
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
