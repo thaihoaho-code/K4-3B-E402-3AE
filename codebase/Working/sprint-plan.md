@@ -23,7 +23,7 @@ graph TD
 
     subgraph Core["⚙️ Core Modules — Working/"]
         VAL["validator.py\nJaccard copy-paste\nregex scope guard"]
-        RAG["retriever.py\ntext-embedding-004\nnumpy cosine search"]
+        RAG["retriever.py\ngemini-embedding-001\nnumpy cosine search"]
         PROMPT["prompt.py\nsystem prompt builder\nfew-shot formatter"]
         LLM["llm.py\ngoogle-generativeai\nstreaming generator"]
         Router --> VAL
@@ -57,7 +57,7 @@ graph TD
 |---|---|---|---|
 | Web framework | **FastAPI** | 0.111+ | Async native, SSE built-in, type hints, tự gen docs |
 | ASGI server | **uvicorn** | 0.29+ | Nhẹ, hot-reload `--reload` cho dev |
-| LLM + Embeddings | **google-generativeai** | 0.7+ | Gemini 2.0 Flash + text-embedding-004 cùng 1 SDK |
+| LLM + Embeddings | **google-generativeai** | 0.7+ | Gemini 2.0 Flash + gemini-embedding-001 cùng 1 SDK |
 | Vector math | **numpy** | 1.26+ | Cosine similarity in-memory, không cần vector DB |
 | Env vars | **python-dotenv** | 1.0+ | Load `.env` cho API key |
 | HTTP client | **httpx** | built-in FastAPI dep | Async HTTP nếu cần gọi ngoài |
@@ -217,7 +217,7 @@ graph LR
 |---|---|---|---|
 | 0:00–0:20 | `main.py`: FastAPI app, mount `StaticFiles(".")`, CORS, uvicorn entry | `main.py` | `uvicorn main:app --reload` → `localhost:8000` trả 200 |
 | 0:20–0:50 | `llm.py`: `genai.GenerativeModel`, `generate_content_async(stream=True)`, async generator → SSE chunks | `llm.py` | Stream chạy trong terminal |
-| 0:50–1:20 | `retriever.py`: load `slide_corpus.json`, embed `text-embedding-004`, numpy cosine, cache `.npy` (**đã có data từ Hồng T+0:50**) | `retriever.py` | `python -c "from retriever import retrieve; print(retrieve('LLM bịa','llm'))"` |
+| 0:50–1:20 | `retriever.py`: load `slide_corpus.json`, embed `gemini-embedding-001`, numpy cosine, cache `.npy` (**đã có data từ Hồng T+0:50**) | `retriever.py` | `python -c "from retriever import retrieve; print(retrieve('LLM bịa','llm'))"` |
 | 1:20–1:50 | `chat.py`: `StreamingResponse(media_type="text/event-stream")`, orchestrate VAL → RAG → PROMPT → LLM | `chat.py` | `curl -N localhost:8000/chat -d '{"topic_id":"llm","user_text":"LLM chỉ đoán từ"}'` → stream |
 | 1:50–2:10 | `notes.py`: đọc/ghi `data/notes.json` thread-safe (`asyncio.Lock`) | `notes.py` | `curl -X POST localhost:8000/notes -d '{"topic_id":"llm","reflection":"test"}'` → 200 |
 | 2:10–3:00 | Fine-tune RAG threshold · fix bug · hỗ trợ Phúc debug CORS nếu cần | — | Demo curl ổn định |
