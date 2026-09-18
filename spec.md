@@ -157,4 +157,5 @@ Lượt chạy 2
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
+| 7h 18/9 | Scope giữ nguyên. Thay đổi frontend cho hợp người 
 | 7h20 18/9 | Thêm tính năng mới: cho phép người dùng up slide, hệ thống tự trích xuất khái niệm bằng AI, lưu vào kho. | Người dùng thử muốn tự up slide của họ thay vì dùng slide hệ thống |

@@ -16,7 +16,8 @@ __pycache__/
 !.env.example
 
 # ── Generated / re-buildable data ──────────
-codebase/Working/data/
+codebase/Working/data/*
+!codebase/Working/data/slide_corpus.json
 
 # ── IDE ────────────────────────────────────
 .vscode/
@@ -27,5 +28,4 @@ codebase/Working/data/
 Thumbs.db
 
 # ── eval ───────────────────────────────────
-eval/slide_corpus.json
 eval/tutor_turns.csv
