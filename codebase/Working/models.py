@@ -20,6 +20,10 @@ class RetrieveResult(BaseModel):
     gap: str
     slide_ref: str
     confidence: float = Field(ge=0.0, le=1.0)
+    # Nội dung slide cần được truyền sang prompt để model chỉ lập luận
+    # trên bằng chứng mà retriever đã chọn. Đặt ở cuối để giữ tương thích
+    # với cách khởi tạo cũ: RetrieveResult(gap, slide_ref, confidence).
+    slide_text: str = ""
 
 
 class NoteRequest(BaseModel):
