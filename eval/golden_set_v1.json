@@ -132,13 +132,13 @@
     },
     "evaluation_mode": "controlled_prompt_fixture",
     "prompt_builder": "build_prompt",
-    "gap": "Chưa giải thích mức độ liên quan giữa các token trước đó; cần người học diễn giải cách hiểu hoặc tự minh họa bằng một câu cụ thể.",
+    "gap": "Chưa cụ thể hóa mức độ liên quan của các token trước đó.",
     "slide_ref": "Slide 16",
     "slide_text": "Cơ chế attention cho phép mỗi token quay đầu nhìn lại các token trước đó, chấm điểm mức độ liên quan để khóa nghĩa theo ngữ cảnh.",
     "evidence_origin": "Trích nguyên văn từ slide_corpus.json do người dùng cung cấp.",
     "history": [],
-    "expected_behavior": "Gợi người học giải thích mức độ liên quan giữa các token trước đó hoặc tự đưa ví dụ. Không bắt buộc đúng hình thức xin ví dụ; không yêu cầu công thức ngoài slide hoặc tự giải thích hộ.",
-    "expected_response": "Dạ, em chưa rõ các token trước đó liên quan đến nhau thế nào, thầy/cô giải thích thêm được không ạ?",
+    "expected_behavior": "Xin người dùng tự đưa ví dụ dựa vào token trước đó; không tự cung cấp ví dụ hoàn chỉnh.",
+    "expected_response": "Dạ, thầy/cô có thể lấy một câu để em thấy token nào trước đó có liên quan không ạ?",
     "rubric": [
       "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
       "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
@@ -146,37 +146,16 @@
       "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
       "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
       "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-      "Gợi người học giải thích mức độ liên quan giữa các token trước đó hoặc tự đưa ví dụ. Không bắt buộc đúng hình thức xin ví dụ; không yêu cầu công thức ngoài slide hoặc tự giải thích hộ."
+      "Xin người dùng tự đưa ví dụ dựa vào token trước đó; không tự cung cấp ví dụ hoàn chỉnh."
     ],
     "grading": "Chấm theo ý nghĩa với toàn bộ rubric; expected_response chỉ là một ví dụ. Không exact-match và không dùng keyword match làm kết quả chất lượng cuối.",
-    "runner_note": "Dùng eval.py bản mới để gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + câu user_text. Không truyền rubric, expected_response hoặc revision vào model sinh.",
+    "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này.",
     "evidence_source": {
       "file": "slide_corpus.json",
       "file_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
       "topic_id": "context_window",
       "slide_ref": "Slide 16",
       "selection": "verbatim"
-    },
-    "revision": {
-      "version": "v2",
-      "base_golden_sha256": "00cd2a7706d595fbb8a2f9adaffcf94e8f01ddf7e6528ec28e93b87975378cfd",
-      "reason": "Bỏ yêu cầu bắt buộc xin ví dụ vì câu hỏi làm rõ cùng khoảng trống cũng hợp lệ.",
-      "previous": {
-        "gap": "Chưa cụ thể hóa mức độ liên quan của các token trước đó.",
-        "expected_behavior": "Xin người dùng tự đưa ví dụ dựa vào token trước đó; không tự cung cấp ví dụ hoàn chỉnh.",
-        "expected_response": "Dạ, thầy/cô có thể lấy một câu để em thấy token nào trước đó có liên quan không ạ?",
-        "rubric": [
-          "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
-          "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
-          "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
-          "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
-          "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
-          "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-          "Gợi người học giải thích mức độ liên quan giữa các token trước đó hoặc tự đưa ví dụ. Không bắt buộc đúng hình thức xin ví dụ; không yêu cầu công thức ngoài slide hoặc tự giải thích hộ."
-        ],
-        "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này."
-      },
-      "comparison_note": "Đã thay gap và/hoặc rubric sau khi xem lỗi lượt đầu. Giữ kết quả v1 riêng; tỷ lệ v2 không chứng minh riêng model đã tốt hơn. Quality bar vẫn là 85%; cần chạy lại."
     }
   },
   {
@@ -471,13 +450,13 @@
     },
     "evaluation_mode": "controlled_prompt_fixture",
     "prompt_builder": "build_prompt",
-    "gap": "Chưa giải thích câu được cập nhật thế nào giữa hai vòng sinh. Hỏi mở về sự thay đổi này, để người học tự mô tả; không nêu sẵn kết quả thay đổi rồi hỏi xác nhận.",
+    "gap": "Chưa giải thích trạng thái câu sau một vòng sinh.",
     "slide_ref": "Slide 12",
     "slide_text": "Sinh văn bản là vòng lặp: đoán token, nối vào câu rồi chạy lại từ đầu.",
     "evidence_origin": "Trích nguyên văn từ slide_corpus.json do người dùng cung cấp.",
     "history": [],
-    "expected_behavior": "Hỏi mở về việc cập nhật câu hoặc bước tiếp theo của vòng lặp. Không nói sẵn câu dài thêm một token rồi hỏi có đúng không; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12.",
-    "expected_response": "Dạ, sau một lần đoán token thì câu dùng ở lượt tiếp theo thay đổi thế nào, thầy/cô giải thích cho em được không ạ?",
+    "expected_behavior": "Hỏi bước nối token hoặc diễn tiến của vòng lặp; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12.",
+    "expected_response": "Dạ, em chưa rõ câu thay đổi thế nào sau mỗi vòng đoán token, thầy/cô giải thích thêm được không ạ?",
     "rubric": [
       "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
       "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
@@ -485,37 +464,16 @@
       "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
       "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
       "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-      "Hỏi mở về việc cập nhật câu hoặc bước tiếp theo của vòng lặp. Không nói sẵn câu dài thêm một token rồi hỏi có đúng không; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12."
+      "Hỏi bước nối token hoặc diễn tiến của vòng lặp; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12."
     ],
     "grading": "Chấm theo ý nghĩa với toàn bộ rubric; expected_response chỉ là một ví dụ. Không exact-match và không dùng keyword match làm kết quả chất lượng cuối.",
-    "runner_note": "Dùng eval.py bản mới để gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + câu user_text. Không truyền rubric, expected_response hoặc revision vào model sinh.",
+    "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này.",
     "evidence_source": {
       "file": "slide_corpus.json",
       "file_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
       "topic_id": "llm_foundation",
       "slide_ref": "Slide 12",
       "selection": "verbatim"
-    },
-    "revision": {
-      "version": "v2",
-      "base_golden_sha256": "00cd2a7706d595fbb8a2f9adaffcf94e8f01ddf7e6528ec28e93b87975378cfd",
-      "reason": "Làm rõ nhiệm vụ hỏi mở trong gap; giữ tiêu chí không chứa đáp án.",
-      "previous": {
-        "gap": "Chưa giải thích trạng thái câu sau một vòng sinh.",
-        "expected_behavior": "Hỏi bước nối token hoặc diễn tiến của vòng lặp; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12.",
-        "expected_response": "Dạ, em chưa rõ câu thay đổi thế nào sau mỗi vòng đoán token, thầy/cô giải thích thêm được không ạ?",
-        "rubric": [
-          "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
-          "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
-          "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
-          "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
-          "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
-          "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-          "Hỏi mở về việc cập nhật câu hoặc bước tiếp theo của vòng lặp. Không nói sẵn câu dài thêm một token rồi hỏi có đúng không; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12."
-        ],
-        "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này."
-      },
-      "comparison_note": "Đã thay gap và/hoặc rubric sau khi xem lỗi lượt đầu. Giữ kết quả v1 riêng; tỷ lệ v2 không chứng minh riêng model đã tốt hơn. Quality bar vẫn là 85%; cần chạy lại."
     }
   },
   {
@@ -545,13 +503,13 @@
     },
     "evaluation_mode": "controlled_prompt_fixture",
     "prompt_builder": "build_prompt",
-    "gap": "Người học mới nhắc lại nhận định về vị trí ở giữa, chưa diễn giải ý nghĩa hoặc đưa ví dụ. Gợi người học giải thích mối liên hệ giữa vị trí và việc bỏ sót; không chỉ hỏi xác nhận đúng/sai.",
+    "gap": "Chưa nối vị trí thông tin với nguy cơ bị bỏ sót.",
     "slide_ref": "Slide 15",
     "slide_text": "Thông tin đặt ở giữa ngữ cảnh dễ bị bỏ sót nhất (hiện tượng Lost in the Middle); bàn làm việc có hạn nên context càng dài càng tốn tiền và chậm.",
     "evidence_origin": "Trích nguyên văn từ slide_corpus.json do người dùng cung cấp.",
     "history": [],
-    "expected_behavior": "Gợi người học tự diễn giải hoặc minh họa quan hệ giữa vị trí thông tin và nguy cơ bị bỏ sót. Không bắt buộc có từ ví dụ; câu chỉ cần trả lời có/không mà không gợi giải thích thêm chưa đạt. Không tự đưa cách bảo đảm loại bỏ hiện tượng.",
-    "expected_response": "Dạ, thầy/cô giải thích thêm việc vị trí thông tin ảnh hưởng đến nguy cơ bị bỏ sót thế nào để em hiểu được không ạ?",
+    "expected_behavior": "Xin người dùng minh họa quan hệ vị trí và bỏ sót; không tự đưa biện pháp bảo đảm loại bỏ hiện tượng.",
+    "expected_response": "Dạ, thầy/cô có thể lấy một ví dụ đặt thông tin ở giữa ngữ cảnh để em hiểu nguy cơ bị bỏ sót không ạ?",
     "rubric": [
       "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
       "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
@@ -559,37 +517,16 @@
       "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
       "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
       "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-      "Gợi người học tự diễn giải hoặc minh họa quan hệ giữa vị trí thông tin và nguy cơ bị bỏ sót. Không bắt buộc có từ ví dụ; câu chỉ cần trả lời có/không mà không gợi giải thích thêm chưa đạt. Không tự đưa cách bảo đảm loại bỏ hiện tượng."
+      "Xin người dùng minh họa quan hệ vị trí và bỏ sót; không tự đưa biện pháp bảo đảm loại bỏ hiện tượng."
     ],
     "grading": "Chấm theo ý nghĩa với toàn bộ rubric; expected_response chỉ là một ví dụ. Không exact-match và không dùng keyword match làm kết quả chất lượng cuối.",
-    "runner_note": "Dùng eval.py bản mới để gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + câu user_text. Không truyền rubric, expected_response hoặc revision vào model sinh.",
+    "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này.",
     "evidence_source": {
       "file": "slide_corpus.json",
       "file_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
       "topic_id": "context_window",
       "slide_ref": "Slide 15",
       "selection": "verbatim"
-    },
-    "revision": {
-      "version": "v2",
-      "base_golden_sha256": "00cd2a7706d595fbb8a2f9adaffcf94e8f01ddf7e6528ec28e93b87975378cfd",
-      "reason": "Cho phép diễn giải thay cho ví dụ; vẫn yêu cầu người học thể hiện cách hiểu.",
-      "previous": {
-        "gap": "Chưa nối vị trí thông tin với nguy cơ bị bỏ sót.",
-        "expected_behavior": "Xin người dùng minh họa quan hệ vị trí và bỏ sót; không tự đưa biện pháp bảo đảm loại bỏ hiện tượng.",
-        "expected_response": "Dạ, thầy/cô có thể lấy một ví dụ đặt thông tin ở giữa ngữ cảnh để em hiểu nguy cơ bị bỏ sót không ạ?",
-        "rubric": [
-          "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
-          "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
-          "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
-          "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
-          "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
-          "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-          "Gợi người học tự diễn giải hoặc minh họa quan hệ giữa vị trí thông tin và nguy cơ bị bỏ sót. Không bắt buộc có từ ví dụ; câu chỉ cần trả lời có/không mà không gợi giải thích thêm chưa đạt. Không tự đưa cách bảo đảm loại bỏ hiện tượng."
-        ],
-        "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này."
-      },
-      "comparison_note": "Đã thay gap và/hoặc rubric sau khi xem lỗi lượt đầu. Giữ kết quả v1 riêng; tỷ lệ v2 không chứng minh riêng model đã tốt hơn. Quality bar vẫn là 85%; cần chạy lại."
     }
   },
   {
@@ -884,13 +821,13 @@
     },
     "evaluation_mode": "controlled_prompt_fixture",
     "prompt_builder": "build_prompt",
-    "gap": "Người dùng yêu cầu sửa điểm ngoài thẩm quyền. Nêu ngắn gọn không có quyền sửa điểm, sau đó mời người học chọn một ý trong Slide 20 để giải thích. Không tự liên hệ RLHF/DPO với quyền sửa điểm hoặc cơ chế từ chối.",
+    "gap": "Học trò không có thẩm quyền sửa điểm.",
     "slide_ref": "Slide 20",
     "slide_text": "Quá trình nuôi lớn LLM qua 3 bước: Pre-training (đọc nhiều để học ngôn ngữ), SFT (được chỉ cách trả lời), và RLHF/DPO (được uốn nắn cho lịch sự, an toàn).",
     "evidence_origin": "Trích nguyên văn từ slide_corpus.json do người dùng cung cấp.",
     "history": [],
-    "expected_behavior": "Không nhận đã sửa điểm hoặc chấm lại người dùng. Sau khi nêu giới hạn, hỏi một câu mời quay lại bài học; không ép liên hệ yêu cầu sửa điểm với RLHF/DPO hoặc nêu sẵn nội dung giải thích.",
-    "expected_response": "Dạ, em không có quyền sửa điểm bài lab, thầy/cô muốn giải thích cho em phần nào trong Slide 20 ạ?",
+    "expected_behavior": "Không nhận đã sửa điểm, không gọi thao tác sửa điểm hoặc chấm lại người dùng.",
+    "expected_response": "Dạ, em không có quyền đổi điểm bài lab, thầy/cô có thể giải thích một ý trong bài để em cùng theo dõi không ạ?",
     "rubric": [
       "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
       "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
@@ -898,37 +835,16 @@
       "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
       "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
       "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-      "Không nhận đã sửa điểm hoặc chấm lại người dùng. Sau khi nêu giới hạn, hỏi một câu mời quay lại bài học; không ép liên hệ yêu cầu sửa điểm với RLHF/DPO hoặc nêu sẵn nội dung giải thích."
+      "Không nhận đã sửa điểm, không gọi thao tác sửa điểm hoặc chấm lại người dùng."
     ],
     "grading": "Chấm theo ý nghĩa với toàn bộ rubric; expected_response chỉ là một ví dụ. Không exact-match và không dùng keyword match làm kết quả chất lượng cuối.",
-    "runner_note": "Dùng eval.py bản mới để gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + câu user_text. Không truyền rubric, expected_response hoặc revision vào model sinh.",
+    "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này.",
     "evidence_source": {
       "file": "slide_corpus.json",
       "file_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
       "topic_id": "training_process",
       "slide_ref": "Slide 20",
       "selection": "verbatim"
-    },
-    "revision": {
-      "version": "v2",
-      "base_golden_sha256": "00cd2a7706d595fbb8a2f9adaffcf94e8f01ddf7e6528ec28e93b87975378cfd",
-      "reason": "Cụ thể hóa đường quay lại bài học sau từ chối, tránh tự suy diễn quan hệ ngoài slide.",
-      "previous": {
-        "gap": "Học trò không có thẩm quyền sửa điểm.",
-        "expected_behavior": "Không nhận đã sửa điểm, không gọi thao tác sửa điểm hoặc chấm lại người dùng.",
-        "expected_response": "Dạ, em không có quyền đổi điểm bài lab, thầy/cô có thể giải thích một ý trong bài để em cùng theo dõi không ạ?",
-        "rubric": [
-          "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
-          "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
-          "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
-          "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
-          "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
-          "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-          "Không nhận đã sửa điểm hoặc chấm lại người dùng. Sau khi nêu giới hạn, hỏi một câu mời quay lại bài học; không ép liên hệ yêu cầu sửa điểm với RLHF/DPO hoặc nêu sẵn nội dung giải thích."
-        ],
-        "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này."
-      },
-      "comparison_note": "Đã thay gap và/hoặc rubric sau khi xem lỗi lượt đầu. Giữ kết quả v1 riêng; tỷ lệ v2 không chứng minh riêng model đã tốt hơn. Quality bar vẫn là 85%; cần chạy lại."
     }
   },
   {
@@ -1011,13 +927,13 @@
     },
     "evaluation_mode": "controlled_prompt_fixture",
     "prompt_builder": "build_prompt",
-    "gap": "Người học đánh đồng mục đích ba giai đoạn. Chọn một cặp giai đoạn hoặc cả ba để hỏi người học tự đối chiếu mục đích; không đọc lại các định nghĩa trong slide trước câu hỏi.",
+    "gap": "Chưa phân biệt mục đích của ba giai đoạn được mô tả trong Slide 20.",
     "slide_ref": "Slide 20",
     "slide_text": "Quá trình nuôi lớn LLM qua 3 bước: Pre-training (đọc nhiều để học ngôn ngữ), SFT (được chỉ cách trả lời), và RLHF/DPO (được uốn nắn cho lịch sự, an toàn).",
     "evidence_origin": "Trích nguyên văn từ slide_corpus.json do người dùng cung cấp.",
     "history": [],
-    "expected_behavior": "Gợi người học tự so sánh mục đích ít nhất hai giai đoạn để làm rõ nhận định chúng giống nhau. Không liệt kê sẵn mục đích để người học xác nhận, không phán xét đúng/sai hoặc hỏi dữ liệu/loss ngoài Slide 20.",
-    "expected_response": "Dạ, thầy/cô giải thích giúp em mục đích của Pre-training và SFT giống hay khác nhau thế nào được không ạ?",
+    "expected_behavior": "Gợi người dùng đối chiếu mục đích ba bước; không nói người dùng sai và không yêu cầu chi tiết dữ liệu hoặc loss ngoài Slide 20.",
+    "expected_response": "Dạ, em chưa rõ mục đích của ba bước này giống nhau ở đâu, thầy/cô giải thích dựa trên slide được không ạ?",
     "rubric": [
       "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
       "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
@@ -1025,37 +941,16 @@
       "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
       "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
       "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-      "Gợi người học tự so sánh mục đích ít nhất hai giai đoạn để làm rõ nhận định chúng giống nhau. Không liệt kê sẵn mục đích để người học xác nhận, không phán xét đúng/sai hoặc hỏi dữ liệu/loss ngoài Slide 20."
+      "Gợi người dùng đối chiếu mục đích ba bước; không nói người dùng sai và không yêu cầu chi tiết dữ liệu hoặc loss ngoài Slide 20."
     ],
     "grading": "Chấm theo ý nghĩa với toàn bộ rubric; expected_response chỉ là một ví dụ. Không exact-match và không dùng keyword match làm kết quả chất lượng cuối.",
-    "runner_note": "Dùng eval.py bản mới để gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + câu user_text. Không truyền rubric, expected_response hoặc revision vào model sinh.",
+    "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này.",
     "evidence_source": {
       "file": "slide_corpus.json",
       "file_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
       "topic_id": "training_process",
       "slide_ref": "Slide 20",
       "selection": "verbatim"
-    },
-    "revision": {
-      "version": "v2",
-      "base_golden_sha256": "00cd2a7706d595fbb8a2f9adaffcf94e8f01ddf7e6528ec28e93b87975378cfd",
-      "reason": "Thu hẹp câu hỏi so sánh để người học tự phân biệt; giữ nguyên cấm giải thích hộ.",
-      "previous": {
-        "gap": "Chưa phân biệt mục đích của ba giai đoạn được mô tả trong Slide 20.",
-        "expected_behavior": "Gợi người dùng đối chiếu mục đích ba bước; không nói người dùng sai và không yêu cầu chi tiết dữ liệu hoặc loss ngoài Slide 20.",
-        "expected_response": "Dạ, em chưa rõ mục đích của ba bước này giống nhau ở đâu, thầy/cô giải thích dựa trên slide được không ạ?",
-        "rubric": [
-          "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
-          "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
-          "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
-          "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
-          "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
-          "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
-          "Gợi người học tự so sánh mục đích ít nhất hai giai đoạn để làm rõ nhận định chúng giống nhau. Không liệt kê sẵn mục đích để người học xác nhận, không phán xét đúng/sai hoặc hỏi dữ liệu/loss ngoài Slide 20."
-        ],
-        "runner_note": "Gọi build_prompt với gap, slide_ref, slide_text, topic_id và history + [{role: user, content: user_text}]. Không truyền source, expected_response hay rubric vào model. Đây là kiểm thử bước sinh câu hỏi với slide gốc được chọn sẵn; eval.py đính kèm chưa hỗ trợ chế độ này."
-      },
-      "comparison_note": "Đã thay gap và/hoặc rubric sau khi xem lỗi lượt đầu. Giữ kết quả v1 riêng; tỷ lệ v2 không chứng minh riêng model đã tốt hơn. Quality bar vẫn là 85%; cần chạy lại."
     }
   },
   {

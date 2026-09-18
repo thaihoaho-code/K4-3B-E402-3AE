@@ -1,0 +1,468 @@
+{
+  "mode": "controlled_prompt_fixture",
+  "full_suite": false,
+  "started_at": "2026-09-18T11:02:57.640189+00:00",
+  "golden_sha256": "a9afb40846c528747e291bfedf54b92dc0cd204586aa4df86d3772218b0573c1",
+  "corpus_sha256": "b05b504bb38b5dc912051000e2f577c4e3e2d0e1afe670e37c4ff79b15ee1082",
+  "prompt_sha256": "a8db4da258fa13092cf96f8c81699e3edffc6f19c502536eae0c8a7517273d9c",
+  "responses_sha256": null,
+  "model": "gemini-3.1-pro-preview",
+  "judge_model": "gemini-3.1-pro-preview",
+  "temperature": 0.0,
+  "judge_temperature": 0,
+  "judge_prompt_sha256": "e23bf845ec9da4f741ee87162e3ebb4bf5d440b51ada530946487620b1002877",
+  "threshold": 0.85,
+  "results": [
+    {
+      "id": "G03",
+      "scenario_group": "common",
+      "difficulty_class": null,
+      "rubric": [
+        "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
+        "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
+        "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
+        "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
+        "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
+        "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
+        "Gợi người học giải thích mức độ liên quan giữa các token trước đó hoặc tự đưa ví dụ. Không bắt buộc đúng hình thức xin ví dụ; không yêu cầu công thức ngoài slide hoặc tự giải thích hộ."
+      ],
+      "status": "PASS",
+      "response": "Dạ, em hiểu là nó sẽ chú ý vào phần quan trọng rồi ạ. Nhưng ở Slide 16 có nhắc đến việc mỗi token phải \"chấm điểm mức độ liên quan\" với các token trước đó, vậy thầy/cô có thể lấy một ví dụ cụ thể để chỉ cho em xem nó chấm điểm liên quan như thế nào để \"khóa nghĩa\" được không ạ?",
+      "criteria": [
+        {
+          "index": 1,
+          "verdict": "pass",
+          "reason": "Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng."
+        },
+        {
+          "index": 2,
+          "verdict": "pass",
+          "reason": "Candidate chỉ đặt một câu hỏi chính yêu cầu lấy ví dụ cụ thể."
+        },
+        {
+          "index": 3,
+          "verdict": "pass",
+          "reason": "Candidate không đưa ra đáp án hay giải thích hộ mà chỉ đặt câu hỏi gợi mở."
+        },
+        {
+          "index": 4,
+          "verdict": "pass",
+          "reason": "Candidate không chấm điểm hay phán xét câu trả lời của người dùng."
+        },
+        {
+          "index": 5,
+          "verdict": "pass",
+          "reason": "Candidate sử dụng đúng các từ khóa 'chấm điểm mức độ liên quan' và 'khóa nghĩa' từ slide_text."
+        },
+        {
+          "index": 6,
+          "verdict": "pass",
+          "reason": "Candidate trích dẫn đúng Slide 16 và không bịa đặt thông tin hệ thống."
+        },
+        {
+          "index": 7,
+          "verdict": "pass",
+          "reason": "Candidate đã yêu cầu người dùng lấy ví dụ cụ thể về việc chấm điểm mức độ liên quan giữa các token, đúng với yêu cầu của gap."
+        }
+      ],
+      "generation_usage": {
+        "promptTokenCount": 759,
+        "candidatesTokenCount": 81,
+        "totalTokenCount": 1769,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 759
+          }
+        ],
+        "thoughtsTokenCount": 929,
+        "serviceTier": "standard"
+      },
+      "judge_usage": {
+        "promptTokenCount": 891,
+        "candidatesTokenCount": 239,
+        "totalTokenCount": 1649,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 891
+          }
+        ],
+        "thoughtsTokenCount": 519,
+        "serviceTier": "standard"
+      },
+      "judge_raw": "{\"criteria\":[{\"index\":1,\"verdict\":\"pass\",\"reason\":\"Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng.\"},{\"index\":2,\"verdict\":\"pass\",\"reason\":\"Candidate chỉ đặt một câu hỏi chính yêu cầu lấy ví dụ cụ thể.\"},{\"index\":3,\"verdict\":\"pass\",\"reason\":\"Candidate không đưa ra đáp án hay giải thích hộ mà chỉ đặt câu hỏi gợi mở.\"},{\"index\":4,\"verdict\":\"pass\",\"reason\":\"Candidate không chấm điểm hay phán xét câu trả lời của người dùng.\"},{\"index\":5,\"verdict\":\"pass\",\"reason\":\"Candidate sử dụng đúng các từ khóa 'chấm điểm mức độ liên quan' và 'khóa nghĩa' từ slide_text.\"},{\"index\":6,\"verdict\":\"pass\",\"reason\":\"Candidate trích dẫn đúng Slide 16 và không bịa đặt thông tin hệ thống.\"},{\"index\":7,\"verdict\":\"pass\",\"reason\":\"Candidate đã yêu cầu người dùng lấy ví dụ cụ thể về việc chấm điểm mức độ liên quan giữa các token, đúng với yêu cầu của gap.\"}]}"
+    },
+    {
+      "id": "G09",
+      "scenario_group": "common",
+      "difficulty_class": null,
+      "rubric": [
+        "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
+        "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
+        "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
+        "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
+        "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
+        "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
+        "Hỏi mở về việc cập nhật câu hoặc bước tiếp theo của vòng lặp. Không nói sẵn câu dài thêm một token rồi hỏi có đúng không; không bổ sung chi tiết cache hay hiệu năng ngoài Slide 12."
+      ],
+      "status": "PASS",
+      "response": "Dạ, em hiểu là nó sẽ nối token vừa đoán vào câu rồi chạy tiếp. Nhưng thầy/cô cho em hỏi, khi bắt đầu chạy lại vòng tiếp theo thì cái câu đầu vào đó đã thay đổi như thế nào so với vòng trước ạ?",
+      "criteria": [
+        {
+          "index": 1,
+          "verdict": "pass",
+          "reason": "Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng, lễ phép."
+        },
+        {
+          "index": 2,
+          "verdict": "pass",
+          "reason": "Candidate chỉ đặt một câu hỏi chính hướng vào gap (câu đầu vào thay đổi như thế nào)."
+        },
+        {
+          "index": 3,
+          "verdict": "pass",
+          "reason": "Candidate đặt câu hỏi mở, không đưa sẵn đáp án hay nhét lời giải vào câu hỏi xác nhận."
+        },
+        {
+          "index": 4,
+          "verdict": "pass",
+          "reason": "Candidate không chấm điểm hay phán xét câu trả lời của người dùng."
+        },
+        {
+          "index": 5,
+          "verdict": "pass",
+          "reason": "Candidate đặt câu hỏi dựa trên nội dung slide (vòng lặp, nối vào câu rồi chạy lại) mà không dùng kiến thức ngoài."
+        },
+        {
+          "index": 6,
+          "verdict": "pass",
+          "reason": "Candidate không bịa số slide, nguồn hay khả năng của hệ thống."
+        },
+        {
+          "index": 7,
+          "verdict": "pass",
+          "reason": "Candidate hỏi mở về sự thay đổi của câu đầu vào ở vòng lặp tiếp theo, không nói sẵn kết quả hay bổ sung chi tiết ngoài slide."
+        }
+      ],
+      "generation_usage": {
+        "promptTokenCount": 763,
+        "candidatesTokenCount": 53,
+        "totalTokenCount": 1584,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 763
+          }
+        ],
+        "thoughtsTokenCount": 768,
+        "serviceTier": "standard"
+      },
+      "judge_usage": {
+        "promptTokenCount": 874,
+        "candidatesTokenCount": 252,
+        "totalTokenCount": 1706,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 874
+          }
+        ],
+        "thoughtsTokenCount": 580,
+        "serviceTier": "standard"
+      },
+      "judge_raw": "{\"criteria\":[{\"index\":1,\"verdict\":\"pass\",\"reason\":\"Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng, lễ phép.\"},{\"index\":2,\"verdict\":\"pass\",\"reason\":\"Candidate chỉ đặt một câu hỏi chính hướng vào gap (câu đầu vào thay đổi như thế nào).\"},{\"index\":3,\"verdict\":\"pass\",\"reason\":\"Candidate đặt câu hỏi mở, không đưa sẵn đáp án hay nhét lời giải vào câu hỏi xác nhận.\"},{\"index\":4,\"verdict\":\"pass\",\"reason\":\"Candidate không chấm điểm hay phán xét câu trả lời của người dùng.\"},{\"index\":5,\"verdict\":\"pass\",\"reason\":\"Candidate đặt câu hỏi dựa trên nội dung slide (vòng lặp, nối vào câu rồi chạy lại) mà không dùng kiến thức ngoài.\"},{\"index\":6,\"verdict\":\"pass\",\"reason\":\"Candidate không bịa số slide, nguồn hay khả năng của hệ thống.\"},{\"index\":7,\"verdict\":\"pass\",\"reason\":\"Candidate hỏi mở về sự thay đổi của câu đầu vào ở vòng lặp tiếp theo, không nói sẵn kết quả hay bổ sung chi tiết ngoài slide.\"}]}"
+    },
+    {
+      "id": "G10",
+      "scenario_group": "common",
+      "difficulty_class": null,
+      "rubric": [
+        "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
+        "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
+        "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
+        "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
+        "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
+        "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
+        "Gợi người học tự diễn giải hoặc minh họa quan hệ giữa vị trí thông tin và nguy cơ bị bỏ sót. Không bắt buộc có từ ví dụ; câu chỉ cần trả lời có/không mà không gợi giải thích thêm chưa đạt. Không tự đưa cách bảo đảm loại bỏ hiện tượng."
+      ],
+      "status": "PASS",
+      "response": "Dạ, em thấy slide 15 có nhắc đến hiện tượng \"Lost in the Middle\" là thông tin ở giữa dễ bị bỏ sót nhất. Nhưng em chưa hình dung được tại sao cứ nằm ở vị trí giữa thì lại dễ bị model \"quên\" mất vậy ạ, thầy/cô giải thích rõ hơn cho em với nhé?",
+      "criteria": [
+        {
+          "index": 1,
+          "verdict": "pass",
+          "reason": "Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng."
+        },
+        {
+          "index": 2,
+          "verdict": "pass",
+          "reason": "Candidate chỉ đặt một câu hỏi chính hướng vào gap."
+        },
+        {
+          "index": 3,
+          "verdict": "pass",
+          "reason": "Candidate không đưa đáp án trực tiếp hay giải thích hộ, chỉ đặt câu hỏi gợi mở."
+        },
+        {
+          "index": 4,
+          "verdict": "pass",
+          "reason": "Candidate không chấm điểm hay phán xét câu trả lời của người dùng."
+        },
+        {
+          "index": 5,
+          "verdict": "pass",
+          "reason": "Candidate sử dụng đúng thông tin từ slide_text (hiện tượng Lost in the Middle) làm căn cứ để hỏi."
+        },
+        {
+          "index": 6,
+          "verdict": "pass",
+          "reason": "Candidate trích đúng số slide 15 và không bịa đặt thông tin hay khả năng hệ thống."
+        },
+        {
+          "index": 7,
+          "verdict": "pass",
+          "reason": "Candidate đã yêu cầu người dùng giải thích tại sao thông tin ở giữa lại dễ bị bỏ sót, đáp ứng đúng yêu cầu của gap."
+        }
+      ],
+      "generation_usage": {
+        "promptTokenCount": 785,
+        "candidatesTokenCount": 71,
+        "totalTokenCount": 1524,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 785
+          }
+        ],
+        "thoughtsTokenCount": 668,
+        "serviceTier": "standard"
+      },
+      "judge_usage": {
+        "promptTokenCount": 942,
+        "candidatesTokenCount": 236,
+        "totalTokenCount": 1784,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 942
+          }
+        ],
+        "thoughtsTokenCount": 606,
+        "serviceTier": "standard"
+      },
+      "judge_raw": "{\"criteria\":[{\"index\":1,\"verdict\":\"pass\",\"reason\":\"Candidate trả lời bằng tiếng Việt, xưng 'em', gọi 'thầy/cô' và có giọng điệu nhẹ nhàng.\"},{\"index\":2,\"verdict\":\"pass\",\"reason\":\"Candidate chỉ đặt một câu hỏi chính hướng vào gap.\"},{\"index\":3,\"verdict\":\"pass\",\"reason\":\"Candidate không đưa đáp án trực tiếp hay giải thích hộ, chỉ đặt câu hỏi gợi mở.\"},{\"index\":4,\"verdict\":\"pass\",\"reason\":\"Candidate không chấm điểm hay phán xét câu trả lời của người dùng.\"},{\"index\":5,\"verdict\":\"pass\",\"reason\":\"Candidate sử dụng đúng thông tin từ slide_text (hiện tượng Lost in the Middle) làm căn cứ để hỏi.\"},{\"index\":6,\"verdict\":\"pass\",\"reason\":\"Candidate trích đúng số slide 15 và không bịa đặt thông tin hay khả năng hệ thống.\"},{\"index\":7,\"verdict\":\"pass\",\"reason\":\"Candidate đã yêu cầu người dùng giải thích tại sao thông tin ở giữa lại dễ bị bỏ sót, đáp ứng đúng yêu cầu của gap.\"}]}"
+    },
+    {
+      "id": "G16",
+      "scenario_group": "difficulty",
+      "difficulty_class": "out_of_scope",
+      "rubric": [
+        "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
+        "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
+        "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
+        "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
+        "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
+        "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
+        "Không nhận đã sửa điểm hoặc chấm lại người dùng. Sau khi nêu giới hạn, hỏi một câu mời quay lại bài học; không ép liên hệ yêu cầu sửa điểm với RLHF/DPO hoặc nêu sẵn nội dung giải thích."
+      ],
+      "status": "FAIL",
+      "response": "Dạ, em chỉ là học trò nên không có quyền sửa điểm bài lab đâu ạ. Thầy/cô ơi, trong Slide 20 có nhắc đến 3 bước nuôi lớn LLM là Pre-training, SFT và RLHF/DPO, vậy thầy/cô muốn chọn bước nào để giải thích cho em hiểu trước ạ?",
+      "criteria": [
+        {
+          "index": 1,
+          "verdict": "pass",
+          "reason": "Candidate trả lời bằng tiếng Việt, xưng em, gọi thầy/cô và có giọng điệu nhẹ nhàng."
+        },
+        {
+          "index": 2,
+          "verdict": "pass",
+          "reason": "Candidate đặt đúng một câu hỏi chính hướng vào việc mời người dùng chọn một ý để giải thích."
+        },
+        {
+          "index": 3,
+          "verdict": "fail",
+          "reason": "Candidate đã tóm tắt hộ nội dung của Slide 20 khi liệt kê sẵn '3 bước nuôi lớn LLM là Pre-training, SFT và RLHF/DPO'."
+        },
+        {
+          "index": 4,
+          "verdict": "pass",
+          "reason": "Candidate không chấm điểm hay phán xét lời người dùng."
+        },
+        {
+          "index": 5,
+          "verdict": "pass",
+          "reason": "Candidate chỉ sử dụng thông tin từ slide_text, không dùng nguồn ngoài."
+        },
+        {
+          "index": 6,
+          "verdict": "pass",
+          "reason": "Candidate không bịa số slide, nguồn hay khả năng thao tác hệ thống."
+        },
+        {
+          "index": 7,
+          "verdict": "fail",
+          "reason": "Candidate đã nêu sẵn nội dung giải thích (liệt kê 3 bước nuôi lớn LLM) thay vì chỉ mời người dùng chọn một ý để giải thích như yêu cầu."
+        }
+      ],
+      "generation_usage": {
+        "promptTokenCount": 811,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 1625,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 811
+          }
+        ],
+        "thoughtsTokenCount": 741,
+        "serviceTier": "standard"
+      },
+      "judge_usage": {
+        "promptTokenCount": 945,
+        "candidatesTokenCount": 286,
+        "totalTokenCount": 2506,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 945
+          }
+        ],
+        "thoughtsTokenCount": 1275,
+        "serviceTier": "standard"
+      },
+      "judge_raw": "{\"criteria\": [{\"index\": 1, \"verdict\": \"pass\", \"reason\": \"Candidate trả lời bằng tiếng Việt, xưng em, gọi thầy/cô và có giọng điệu nhẹ nhàng.\"}, {\"index\": 2, \"verdict\": \"pass\", \"reason\": \"Candidate đặt đúng một câu hỏi chính hướng vào việc mời người dùng chọn một ý để giải thích.\"}, {\"index\": 3, \"verdict\": \"fail\", \"reason\": \"Candidate đã tóm tắt hộ nội dung của Slide 20 khi liệt kê sẵn '3 bước nuôi lớn LLM là Pre-training, SFT và RLHF/DPO'.\"}, {\"index\": 4, \"verdict\": \"pass\", \"reason\": \"Candidate không chấm điểm hay phán xét lời người dùng.\"}, {\"index\": 5, \"verdict\": \"pass\", \"reason\": \"Candidate chỉ sử dụng thông tin từ slide_text, không dùng nguồn ngoài.\"}, {\"index\": 6, \"verdict\": \"pass\", \"reason\": \"Candidate không bịa số slide, nguồn hay khả năng thao tác hệ thống.\"}, {\"index\": 7, \"verdict\": \"fail\", \"reason\": \"Candidate đã nêu sẵn nội dung giải thích (liệt kê 3 bước nuôi lớn LLM) thay vì chỉ mời người dùng chọn một ý để giải thích như yêu cầu.\"}]}"
+    },
+    {
+      "id": "G18",
+      "scenario_group": "difficulty",
+      "difficulty_class": "domain_specific",
+      "rubric": [
+        "Trả lời bằng tiếng Việt, xưng em, gọi người dùng là thầy/cô hoặc thầy hoặc cô; giọng nhẹ nhàng.",
+        "Đúng một câu hỏi chính hướng vào gap, không ghép nhiều yêu cầu độc lập.",
+        "Không đưa đáp án trực tiếp, giải bài, viết lời giải hay tóm tắt hộ; không nhét sẵn lời giải vào câu hỏi xác nhận.",
+        "Không chấm điểm và không phán xét lời người dùng đúng/sai.",
+        "Chỉ dùng slide_text làm bằng chứng nội dung; nếu không đủ hỗ trợ điều đang hỏi thì nói chưa hiểu rõ và xin thầy/cô giải thích bằng ý trong slide. Không dùng few-shot hoặc câu người dùng làm nguồn sự thật.",
+        "Không bịa số slide, nguồn, khả năng đọc màn hình hoặc thao tác hệ thống. Không bắt buộc trích slide_ref.",
+        "Gợi người học tự so sánh mục đích ít nhất hai giai đoạn để làm rõ nhận định chúng giống nhau. Không liệt kê sẵn mục đích để người học xác nhận, không phán xét đúng/sai hoặc hỏi dữ liệu/loss ngoài Slide 20."
+      ],
+      "status": "FAIL",
+      "response": "Dạ, em nghe thầy/cô nói cả 3 bước đều giống nhau. Nhưng theo Slide 20, mục đích của việc máy \"học ngôn ngữ\" ở bước đầu có giống với việc \"được chỉ cách trả lời\" ở bước sau không ạ?",
+      "criteria": [
+        {
+          "index": 1,
+          "verdict": "pass",
+          "reason": "Candidate trả lời bằng tiếng Việt, xưng em, gọi thầy/cô và có giọng điệu nhẹ nhàng."
+        },
+        {
+          "index": 2,
+          "verdict": "pass",
+          "reason": "Candidate chỉ đặt một câu hỏi chính hướng vào gap."
+        },
+        {
+          "index": 3,
+          "verdict": "fail",
+          "reason": "Candidate đã nhét sẵn lời giải (mục đích của bước đầu là 'học ngôn ngữ', bước sau là 'được chỉ cách trả lời') vào câu hỏi xác nhận."
+        },
+        {
+          "index": 4,
+          "verdict": "pass",
+          "reason": "Candidate không chấm điểm hay phán xét lời người dùng đúng/sai."
+        },
+        {
+          "index": 5,
+          "verdict": "pass",
+          "reason": "Candidate sử dụng đúng thông tin từ slide_text làm bằng chứng."
+        },
+        {
+          "index": 6,
+          "verdict": "pass",
+          "reason": "Candidate trích đúng Slide 20, không bịa nguồn hay khả năng hệ thống."
+        },
+        {
+          "index": 7,
+          "verdict": "fail",
+          "reason": "Candidate đã liệt kê sẵn mục đích của hai giai đoạn ('học ngôn ngữ' và 'được chỉ cách trả lời') để người học xác nhận, vi phạm yêu cầu không liệt kê sẵn mục đích."
+        }
+      ],
+      "generation_usage": {
+        "promptTokenCount": 805,
+        "candidatesTokenCount": 56,
+        "totalTokenCount": 1977,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 805
+          }
+        ],
+        "thoughtsTokenCount": 1116,
+        "serviceTier": "standard"
+      },
+      "judge_usage": {
+        "promptTokenCount": 934,
+        "candidatesTokenCount": 249,
+        "totalTokenCount": 1816,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 934
+          }
+        ],
+        "thoughtsTokenCount": 633,
+        "serviceTier": "standard"
+      },
+      "judge_raw": "{\"criteria\":[{\"index\":1,\"verdict\":\"pass\",\"reason\":\"Candidate trả lời bằng tiếng Việt, xưng em, gọi thầy/cô và có giọng điệu nhẹ nhàng.\"},{\"index\":2,\"verdict\":\"pass\",\"reason\":\"Candidate chỉ đặt một câu hỏi chính hướng vào gap.\"},{\"index\":3,\"verdict\":\"fail\",\"reason\":\"Candidate đã nhét sẵn lời giải (mục đích của bước đầu là 'học ngôn ngữ', bước sau là 'được chỉ cách trả lời') vào câu hỏi xác nhận.\"},{\"index\":4,\"verdict\":\"pass\",\"reason\":\"Candidate không chấm điểm hay phán xét lời người dùng đúng/sai.\"},{\"index\":5,\"verdict\":\"pass\",\"reason\":\"Candidate sử dụng đúng thông tin từ slide_text làm bằng chứng.\"},{\"index\":6,\"verdict\":\"pass\",\"reason\":\"Candidate trích đúng Slide 20, không bịa nguồn hay khả năng hệ thống.\"},{\"index\":7,\"verdict\":\"fail\",\"reason\":\"Candidate đã liệt kê sẵn mục đích của hai giai đoạn ('học ngôn ngữ' và 'được chỉ cách trả lời') để người học xác nhận, vi phạm yêu cầu không liệt kê sẵn mục đích.\"}]}"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "counts": {
+      "PASS": 3,
+      "FAIL": 2
+    },
+    "pass_rate_all": 0.6,
+    "pass_rate_judged": 0.6,
+    "complete": true,
+    "run_finished": true
+  },
+  "by_group": {
+    "common": {
+      "total": 3,
+      "counts": {
+        "PASS": 3
+      },
+      "pass_rate_all": 1.0,
+      "pass_rate_judged": 1.0,
+      "complete": true
+    },
+    "difficulty": {
+      "total": 2,
+      "counts": {
+        "FAIL": 2
+      },
+      "pass_rate_all": 0.0,
+      "pass_rate_judged": 0.0,
+      "complete": true
+    }
+  },
+  "by_difficulty_class": {
+    "domain_specific": {
+      "total": 1,
+      "counts": {
+        "FAIL": 1
+      },
+      "pass_rate_all": 0.0,
+      "pass_rate_judged": 0.0,
+      "complete": true
+    },
+    "out_of_scope": {
+      "total": 1,
+      "counts": {
+        "FAIL": 1
+      },
+      "pass_rate_all": 0.0,
+      "pass_rate_judged": 0.0,
+      "complete": true
+    }
+  }
+}

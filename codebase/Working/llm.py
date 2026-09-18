@@ -24,3 +24,20 @@ async def generate_content_stream(contents, config=None):
                 await asyncio.sleep(2 ** attempt)
             else:
                 raise e
+
+async def generate_content(contents, config=None):
+    model_name = os.getenv("GEMINI_MODEL", "gemini-3.1-pro-preview")
+    max_retries = 3
+    
+    for attempt in range(max_retries):
+        try:
+            response = await client.aio.models.generate_content(
+                model=model_name,
+                contents=contents, config=config
+            )
+            return response.text
+        except Exception as e:
+            if attempt < max_retries - 1 and "503" in str(e):
+                await asyncio.sleep(2 ** attempt)
+            else:
+                raise e

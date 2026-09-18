@@ -3,7 +3,7 @@
 const $ = id => document.getElementById(id);
 let catalog = [], current = null, turns = 0, pending = null, asked = new Set(), history = [];
 let noteSession = null, savingNote = false;
-const UPLOAD_TOPIC_ENDPOINT = '/topics/from-slides';
+const UPLOAD_TOPIC_ENDPOINT = 'ingest';
 let selectedPdf = null, uploadController = null, topicsLoading = true;
 
 function renderTopics() {
@@ -26,7 +26,7 @@ function fallbackTopicId(filename) {
 function normalizeUploadedTopic(payload, filename) {
   const topic = payload?.topic ?? payload;
   if (!topic || typeof topic !== 'object' || Array.isArray(topic) || typeof topic.title !== 'string' || !topic.title.trim()
-      || !Array.isArray(topic.slides) || !topic.slides.length || topic.slides.length > PDF_LIMITS.pages) {
+    || !Array.isArray(topic.slides) || !topic.slides.length || topic.slides.length > PDF_LIMITS.pages) {
     throw new Error('Backend trả về chủ đề không hợp lệ (cần title và slides).');
   }
   const rawId = topic.topic_id ?? topic.id;
@@ -63,16 +63,20 @@ $('upload-topic').onclick = async () => {
   const timeout = setTimeout(() => controller.abort(), 90000);
   updateUpload(); $('upload-status').textContent = 'Đang đọc PDF…';
   try {
-    const extractedData = await extractPdfSlides(file, { signal: controller.signal, onProgress: (page, count) => {
-      if (uploadController !== controller) return;
-      $('pdf-pages').textContent = `Số trang: ${count}`;
-      $('upload-status').textContent = `Đang đọc PDF… ${page}/${count} trang`;
-    } });
+    const extractedData = await extractPdfSlides(file, {
+      signal: controller.signal, onProgress: (page, count) => {
+        if (uploadController !== controller) return;
+        $('pdf-pages').textContent = `Số trang: ${count}`;
+        $('upload-status').textContent = `Đang đọc PDF… ${page}/${count} trang`;
+      }
+    });
     if (uploadController !== controller) return;
     if (controller.signal.aborted) throw new DOMException('Timeout', 'AbortError');
     $('upload-status').textContent = 'Đã trích xuất thành công. Đang gửi dữ liệu lên backend…';
-    const response = await fetch(UPLOAD_TOPIC_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(extractedData), signal: controller.signal });
+    const response = await fetch(UPLOAD_TOPIC_ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(extractedData), signal: controller.signal
+    });
     if (!response.ok) throw new Error(`Không thể tạo chủ đề (HTTP ${response.status}). Hãy kiểm tra endpoint ${UPLOAD_TOPIC_ENDPOINT}.`);
     let payload;
     try { payload = await response.json(); } catch { throw new Error('Backend trả về JSON không hợp lệ.'); }
@@ -136,7 +140,7 @@ function updateProgress() {
   $('message').disabled = busy || !current;
   $('send').disabled = busy || !current || $('message').value.trim().length <= 20;
   $('skip-thread').disabled = busy || !current;
-  
+
   $('open-reference').disabled = !current;
   $('chat-form').setAttribute('aria-busy', String(busy));
   $('send').textContent = busy ? '◌' : '↑';
@@ -233,8 +237,10 @@ async function sendMessage(text, action = null) {
     const response = await fetch('/chat', {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'text/event-stream' },
       signal: controller.signal,
-      body: JSON.stringify({ topic_id: topic.id, user_text: text, history: previousHistory,
-        asked_indexes: [...asked], ...(action ? { action } : {}) })
+      body: JSON.stringify({
+        topic_id: topic.id, user_text: text, history: previousHistory,
+        asked_indexes: [...asked], ...(action ? { action } : {})
+      })
     });
     if (!response.ok) throw new Error(`Không thể nhận phản hồi (HTTP ${response.status}).`);
     if (!response.headers.get('content-type')?.includes('text/event-stream') || !response.body) {
@@ -296,8 +302,10 @@ $('save-note').onclick = async () => {
   savingNote = true; $('save-note').disabled = true; $('reflection').disabled = true;
   $('save-status').textContent = 'Đang lưu…';
   try {
-    const response = await fetch('/notes', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      signal: AbortSignal.timeout(30000), body: JSON.stringify({ ...noteSession, reflection }) });
+    const response = await fetch('/notes', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(30000), body: JSON.stringify({ ...noteSession, reflection })
+    });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     if ((await response.json()).saved !== true) throw new Error('Máy chủ chưa xác nhận lưu');
     $('save-status').textContent = 'Đã lưu ✓';

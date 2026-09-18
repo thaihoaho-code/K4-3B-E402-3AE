@@ -27,5 +27,5 @@ codebase/Working/data/
 Thumbs.db
 
 # ── eval ───────────────────────────────────
-codebase/Working/eval/slide_corpus.json
-codebase/Working/eval/tutor_turns.csv
+eval/slide_corpus.json
+eval/tutor_turns.csv
