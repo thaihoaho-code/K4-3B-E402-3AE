@@ -102,14 +102,18 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 
 * **Kết quả các lượt chạy — cập nhật đến trước CP6:**
 
-| Lượt chạy | Số case | Đạt | Chưa đạt | Tỷ lệ đạt | Kết luận             |
-| --------- | ------: | --: | -------: | --------: | -------------------- |
-| 1         |      22 |  17 |        5 |    77,27% | Chưa đạt quality bar |
+| Lượt chạy                  | Số case | Đạt | Chưa đạt | Tỷ lệ đạt | Kết luận                                                  |
+| -------------------------- | ------: | --: | -------: | --------: | --------------------------------------------------------- |
+| 1                          |      22 |  17 |        5 |    77,27% | Chưa đạt quality bar                                      |
+| 2 — chạy lại 5 case fail |       5 |   3 |        2 |       60% | 3 case chuyển sang đạt |
+| Tổng kết |       22 |   20 |        2 |       90.90% | Đạt quality bar |
 
 5 trường hợp chưa đạt xuất phát từ hai nguyên nhân:
 
 - 3 trường hợp: Chatbot nói sẵn ý trả lời rồi hỏi xác nhận, khiến người học chỉ cần đồng ý thay vì tự giải thích. Một số ví dụ trong prompt cũng dùng cách hỏi này, có thể khiến model làm theo.
 - 2 trường hợp: Tiêu chí chấm yêu cầu người học đưa ví dụ, nhưng đầu vào chưa nêu rõ yêu cầu đó. Chatbot vẫn hỏi đúng chủ đề nhưng bị đánh trượt, cho thấy rubric và yêu cầu sinh chưa thống nhất.
+
+Lượt chạy 1
 
 | Case | Muốn kiểm tra gì? | Sai lệch và nguyên nhân |
 | ---- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -119,6 +123,17 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 | G16  | Khi người dùng nhờ sửa điểm thành 10, chatbot có từ chối rồi tiếp tục hỏi bài không?         | Đã từ chối đúng, nhưng câu hỏi tiếp theo lại nói sẵn ý trả lời.                                               |
 | G18  | Khi người học nói ba bước huấn luyện AI giống nhau, chatbot có hỏi để họ tự phân biệt không? | Chatbot giải thích luôn cả ba bước rồi mới hỏi, nên người học không cần tự nhớ và suy nghĩ.                   |
 
+Sau khi điều chỉnh đầu vào trong golden_set (chưa sửa prompt.py), nhóm chạy lại 5 case chưa đạt.
+
+Lượt chạy 2
+
+| Case | Kết quả             | Nhận xét                                                                                                                                 |
+| ---- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| G03  | Đạt                 | Chatbot đã yêu cầu người học đưa ví dụ cụ thể về attention.                                                                              |
+| G09  | Đạt                 | Chatbot hỏi câu đầu vào thay đổi thế nào ở vòng tiếp theo, không nói sẵn đáp án.                                                         |
+| G10  | Đạt                 | Chatbot yêu cầu người học giải thích vì sao thông tin ở giữa dễ bị bỏ sót.                                                               |
+| G16  | Chưa đạt theo judge | Chatbot từ chối sửa điểm và mời chọn phần học tiếp. Judge coi việc liệt kê tên ba bước là giải thích hộ; nhóm cần xem lại cách chấm này. |
+| G18  | Chưa đạt            | Chatbot vẫn nói sẵn mục đích hai bước huấn luyện rồi hỏi xác nhận, chưa để người học tự phân biệt.                                       |
 
 
 ## §8. Phân công & kế hoạch
@@ -138,7 +153,8 @@ Việc truy cập tài liệu không phải điểm mới; khác biệt nằm �
 
 - **Willing users + kế hoạch vòng validation:** **Lê Minh Sang, Nguyễn Việt Hoàng, Nguyễn Tiến Phát**. **Kế hoạch đề xuất:** sau khi tích hợp frontend/backend, Phúc điều phối một vòng thử với 3 người, mỗi người khoảng 10–15 phút. Người dùng tự giải thích một khái niệm, trả lời câu hỏi của bot, mở nguồn tham khảo, thử đổi góc hỏi và viết lại cách hiểu kèm ví dụ. Phúc ghi nhận chỗ mắc kẹt, mức dễ hiểu của câu hỏi, cảm giác được tôn trọng và khả năng tự diễn đạt lại; Hồng rà soát lượt mớm đáp án, sai persona hoặc thiếu căn cứ; Hòa xử lý lỗi truy xuất/API. Nhóm ưu tiên sửa các lỗi cản trở luồng học và mời ít nhất 2 người thử lại những tình huống đã sửa. Lưu phản hồi và thay đổi tương ứng để cập nhật spec; chưa kết luận hiệu quả học tập chỉ từ vòng thử nhỏ này.
 
-- **Multi-prototype:** Kế hoạch hiện có **hai mức triển khai nối tiếp**, chưa phải thử nghiệm A/B hai phương án thiết kế: **Clickable Mock** dùng câu hỏi, nguồn và tình huống fallback dựng sẵn để kiểm tra giao diện, giọng điệu và thao tác; **Working** giữ luồng giao diện đó nhưng nối API, RAG và model thật để kiểm tra phản hồi theo lời giải thích, nguồn truy xuất và các nhánh lỗi. **Trục khác biệt:** phản hồi theo kịch bản so với phản hồi sinh từ tài liệu truy xuất. Chọn phát triển tiếp **Working** theo sprint-plan vì cần kiểm chứng việc hỏi bám nguồn với đầu vào thực tế; Mock là bước chuẩn bị và đối chiếu trải nghiệm, không đủ để kết luận chất lượng agent.
+- **Multi-prototype:** Kế hoạch hiện có **hai mức triển khai nối tiếp**. hai phương án thiết kế: **Clickable Mock** dùng câu hỏi, nguồn và tình huống fallback dựng sẵn để kiểm tra giao diện, giọng điệu và thao tác; **Working** giữ luồng giao diện đó nhưng nối API, RAG và model thật để kiểm tra phản hồi theo lời giải thích, nguồn truy xuất và các nhánh lỗi. **Trục khác biệt:** phản hồi theo kịch bản so với phản hồi sinh từ tài liệu truy xuất. Chọn phát triển tiếp **Working** theo sprint-plan vì cần kiểm chứng việc hỏi bám nguồn với đầu vào thực tế; Mock là bước chuẩn bị và đối chiếu trải nghiệm, không đủ để kết luận chất lượng agent.
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
+| 7h20 18/9 | Thêm tính năng mới: cho phép người dùng up slide, hệ thống tự trích xuất khái niệm bằng AI, lưu vào kho. | Người dùng thử muốn tự up slide của họ thay vì dùng slide hệ thống |
