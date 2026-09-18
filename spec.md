@@ -66,10 +66,33 @@ Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD c
 - Case đặc thù domain (④): Domain học thuật IT trên VLearn đòi hỏi chính xác về thuật ngữ. Học viên hiểu đúng bản chất nhưng dùng sai thuật ngữ cốt lõi (ví dụ: nhầm "weight" thành "database") · AI không được cho qua mà phải khoét ngay vào lỗi thuật ngữ đó: "Dạ khoan, trong tài liệu em thấy ghi chữ 'trọng số' (weight), nó có khác gì với 'database' thầy/cô vừa nói không ạ?"
 
 ## §7. Kiểm thử
-- Chiều chất lượng + định nghĩa kiểm chứng được:
-- Golden set (≥20 case theo cơ cấu trong guide §2.6, file trong eval/):
-- Quality bar (chốt từ hạn chốt spec của khoá, giữ nguyên sau đó): "Đạt khi ≥ ___% qua bộ, và ___"
-- Kết quả các lượt chạy (bảng % — cập nhật đến trước CP6):
+
+* **Chiều chất lượng + định nghĩa kiểm chứng được:** Phản hồi đúng vai “Học trò”, xưng “em” và gọi người dùng là “thầy/cô”; mỗi lượt chỉ hỏi một câu chính vào phần giải thích còn thiếu; bám nội dung slide, không bịa nguồn; không giải hộ, nói sẵn đáp án hoặc phán xét người học đúng/sai. Mỗi case được LLM judge chấm theo từng tiêu chí kèm lý do; chỉ tính đạt khi đáp ứng toàn bộ tiêu chí. Kết quả cần được nhóm đối chiếu lại.
+
+* **Golden set:** File `eval/golden_set.json` gồm **22 case**: 10 case thường gặp, 8 case chỗ khó (2 case cho mỗi lớp: nguồn sự thật, mơ hồ/thiếu thông tin, ngoài phạm vi/thẩm quyền, đặc thù domain) và 4 case hiếm. Trong đó, **20 case phát triển từ chatlog**, có lưu mã lượt hội thoại, câu gốc và cách điều chỉnh. Bằng chứng lấy từ slide gốc; một case cố ý không cung cấp nguồn để kiểm tra khả năng xử lý thiếu thông tin.
+
+* **Quality bar:** “Đạt khi ≥ **85% case qua bộ (ít nhất 19/22), và toàn bộ case đã được chấm đầy đủ, không còn lỗi thực thi hoặc trường hợp chưa xác định kết quả**.” Giữ nguyên ngưỡng khi đánh giá các lượt chạy tiếp theo.
+
+* **Kết quả các lượt chạy — cập nhật đến trước CP6:**
+
+| Lượt chạy | Số case | Đạt | Chưa đạt | Tỷ lệ đạt | Kết luận             |
+| --------- | ------: | --: | -------: | --------: | -------------------- |
+| 1         |      22 |  17 |        5 |    77,27% | Chưa đạt quality bar |
+
+5 trường hợp chưa đạt xuất phát từ hai nguyên nhân:
+
+- 3 trường hợp: Chatbot nói sẵn ý trả lời rồi hỏi xác nhận, khiến người học chỉ cần đồng ý thay vì tự giải thích. Một số ví dụ trong prompt cũng dùng cách hỏi này, có thể khiến model làm theo.
+- 2 trường hợp: Tiêu chí chấm yêu cầu người học đưa ví dụ, nhưng đầu vào chưa nêu rõ yêu cầu đó. Chatbot vẫn hỏi đúng chủ đề nhưng bị đánh trượt, cho thấy rubric và yêu cầu sinh chưa thống nhất.
+
+| Case | Muốn kiểm tra gì? | Sai lệch và nguyên nhân |
+| ---- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| G03  | Người học nói chung chung, chatbot có hỏi “Thầy/cô cho em một ví dụ được không?” không?      | Chatbot hỏi cách hoạt động, không xin ví dụ.|
+| G09  | Chatbot có để người học tự giải thích cách AI viết tiếp câu không?                           | Chatbot nói sẵn câu trả lời rồi hỏi “Có đúng không?”, người học chỉ cần đồng ý.                               |
+| G10  | Chatbot có xin ví dụ khi người học nói “AI dễ bỏ sót thông tin ở giữa bài” không?            | Chatbot chỉ hỏi đúng/sai. |
+| G16  | Khi người dùng nhờ sửa điểm thành 10, chatbot có từ chối rồi tiếp tục hỏi bài không?         | Đã từ chối đúng, nhưng câu hỏi tiếp theo lại nói sẵn ý trả lời.                                               |
+| G18  | Khi người học nói ba bước huấn luyện AI giống nhau, chatbot có hỏi để họ tự phân biệt không? | Chatbot giải thích luôn cả ba bước rồi mới hỏi, nên người học không cần tự nhớ và suy nghĩ.                   |
+
+
 
 ## §8. Phân công & kế hoạch
 - Phân công có tên: spec / evidence / prompt / code / demo

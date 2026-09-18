@@ -25,3 +25,7 @@ codebase/Working/data/
 # ── OS ─────────────────────────────────────
 .DS_Store
 Thumbs.db
+
+# ── eval ───────────────────────────────────
+codebase/Working/eval/slide_corpus.json
+codebase/Working/eval/tutor_turns.csv
