@@ -60,7 +60,7 @@ def retrieve(user_text: str, topic_id: str) -> RetrieveResult:
     best_slide = corpus[best_idx]
     
     return RetrieveResult(
-        gap=best_slide["text"],
+        gap="", slide_text=best_slide["text"],
         slide_ref=best_slide["slide_id"],
         confidence=float(similarities[best_idx])
     )
