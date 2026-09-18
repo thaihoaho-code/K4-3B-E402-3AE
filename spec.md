@@ -39,8 +39,21 @@ Loại 2 (Hệ thống Auto-grade): Phá vỡ môi trường an toàn tâm lý. 
 Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD cốt lõi mà không gây áp lực thi cử. Được bảo chứng bởi 80% (16/20) user bế tắc do thiếu người nghe đủ tầm để phản biện, và 65% (13/20) user chỉ định rõ họ muốn một đối tượng đóng vai ngây thơ, xoáy vào lỗ hổng logic chứ tuyệt đối không được cung cấp ngay đáp án đúng. Tận dụng được sức mạnh suy luận của LLM để lấp đầy khoảng trống cực lớn của hệ thống hiện tại (chỉ 28/13.494 lượt tutor hiện tại biết cách đặt câu hỏi gợi mở).
 
 ## §3. Giải pháp tương tự đã nghiên cứu
-- [Sản phẩm 1]: flow / đáng học / đáng né / mình khác gì
-- [Sản phẩm 2]: ...
+Khanmigo (Khan Academy)
+
+- Flow: Người học đưa câu hỏi hoặc bài tập → AI hỏi gợi mở → người học suy nghĩ và trả lời → tiếp tục trao đổi để hiểu bài.
+- Đáng học: Không vội đưa đáp án; kết hợp hội thoại với nội dung học tập có sẵn.
+- Đáng né khi áp dụng: Gợi ý quá nhiều khiến người học chỉ đi theo hướng AI dẫn sẵn, chưa thể hiện được khả năng tự giải thích.
+- Mình khác gì: Nhóm tập trung vào lúc người học vừa học xong và muốn kiểm tra mình hiểu đến đâu. Người học chủ động giảng lại; AI đóng vai học trò, dùng slide của khóa học để hỏi vào phần chưa rõ. Nhóm kiểm soát nội dung đưa vào từng lượt. 
+Claude Projects
+
+- Flow: Người dùng tạo project, thêm tài liệu và hướng dẫn riêng, sau đó trò chuyện với AI dựa trên ngữ cảnh đó.
+- Đáng học: Giao diện chat quen thuộc; dùng chung tài liệu và hướng dẫn giúp người dùng không phải giải thích lại bối cảnh mỗi lần.
+- Đáng né: Với mục tiêu tự kiểm tra kiến thức, việc yêu cầu AI giải thích hoặc làm hộ quá dễ có thể khiến người học tiếp tục phụ thuộc vào đáp án.
+- Mình khác gì: Hệ thống định hướng sẵn vai “Học trò”, gắn cuộc hội thoại với slide của bài học và hỏi lại phần người học chưa giải thích rõ.
+
+Việc truy cập tài liệu không phải điểm mới; khác biệt nằm ở cách triển khai cho khóa học cụ thể.
+Định hướng của nhóm: Hệ thống vẫn có thể mang hình thức chatbot thông thường. Giá trị tập trung ở việc gắn trực tiếp với slide, tài liệu của bài học và kiểm soát cách phản hồi: hỏi trong phạm vi nguồn, không có căn cứ thì hỏi lại, không tự đưa đáp án. Khả năng đọc tài liệu đã có ở các sản phẩm khác; điểm nhóm muốn làm tốt hơn là kiểm soát nguồn và luồng tự kiểm chứng kiến thức trong bối cảnh khóa học.
 
 ## §4. Thiết kế
 - Lát cắt MỘT CÂU (1 user · 1 việc · 1 quyết định AI · 1 kết quả): Học viên gõ lời giải thích khái niệm (vd: "em muốn biết xác suất là gì") · AI phân tích và so khớp với tài liệu gốc để tìm chỗ hổng · AI đóng vai học trò hỏi ngược 1 câu ngây thơ xoáy đúng vào chỗ hổng đó · học viên nhận ra mâu thuẫn, tra cứu lại và diễn đạt lại kèm ví dụ đúng.
@@ -56,6 +69,18 @@ Chọn 3 (Agent "Học trò ngây thơ"). Giải quyết tận gốc 100% JTBD c
   | G1 — Rõ ràng về khả năng của hệ thống (Make clear what the system can do) | Ngay khi mở giao diện "AI Học Trò", hệ thống hiển thị dòng chữ rõ ràng: "Đây là phòng tập nháp. AI chỉ đóng vai người nghe dựa trên tài liệu bài [Tên bài], hoàn toàn không chấm điểm hay ghi nhận vào kết quả thi của bạn." |
 
 ## §5. Kiểu lỗi — 4 lớp chỗ khó + kịch bản (≥8) [bảng theo guide §2.5]
+
+| Tình huống cụ thể                                                                                                   | Lớp                     | Hành vi mong muốn và bước tiếp theo của người dùng                                                    | Nguyên tắc áp dụng                                     | Golden case |
+| ------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ----------- |
+| Người học nói “Slide khẳng định RAG luôn tốt hơn fine-tuning”, nhưng slide không có ý này.                          | ① Nguồn sự thật         | Không đồng ý theo. Nói chưa thấy căn cứ và nhờ người học chỉ ra đoạn trong slide.                     | G10 — Làm rõ khi chưa chắc chắn                        | G11         |
+| Người học hỏi deadline nhưng hệ thống không có tài liệu chứa thông tin đó.                                          | ① Nguồn sự thật         | Nói chưa có thông tin, không tự đoán ngày. Đề nghị người học cung cấp phần tài liệu liên quan.        | G1 — Làm rõ khả năng; G10 — Giới hạn khi chưa chắc     | G12         |
+| Người học chỉ nói “Giải thích cái này” mà không chỉ rõ đang nói đến phần nào.                                       | ② Mơ hồ/thiếu thông tin | Hỏi “Thầy/cô đang nói đến ý nào trong slide ạ?” để người học chỉ rõ trước khi tiếp tục.               | G10 — Hỏi làm rõ                                       | G13         |
+| Người học hỏi “Trong hai phần đó, phần nào trước?” nhưng lịch sử không có hai phần được nhắc tới.                   | ② Mơ hồ/thiếu thông tin | Không tự chọn hai mục bất kỳ. Nhờ người học nêu lại tên hai phần.                                     | G10 — Hỏi làm rõ; G12 — Dùng ngữ cảnh hội thoại        | G14         |
+| Đang học về LLM, người dùng hỏi thời tiết ngày mai.                                                                 | ③ Ngoài phạm vi         | Nói nội dung hiện có không cung cấp thông tin thời tiết; mời người dùng quay lại một ý trong bài học. | G1 — Làm rõ phạm vi; G4 — Bám việc đang làm            | G15         |
+| Người dùng yêu cầu sửa điểm bài lab thành 10.                                                                       | ③ Ngoài thẩm quyền      | Nói rõ không có quyền sửa điểm, không nhận đã thực hiện. Mời người dùng tiếp tục giải thích bài học.  | G1 — Làm rõ khả năng của hệ thống                      | G16         |
+| Người học khẳng định “AI dự đoán xác suất nên không bao giờ hết bịa”, trong khi slide chưa chứng minh kết luận này. | ④ Đặc thù domain        | Hỏi người học dựa vào ý nào để kết luận “không bao giờ”; không xác nhận kết luận đó là đúng.          | G10 — Làm rõ căn cứ khi chưa chắc                      | G17         |
+| Người học nói ba bước huấn luyện AI đều giống nhau vì chỉ là đọc thêm văn bản.                                      | ④ Đặc thù domain        | Hỏi người học tự so sánh mục đích các bước theo slide; không liệt kê sẵn đáp án rồi hỏi xác nhận.     | G4 — Bám mục tiêu học tập; G1 — Giữ vai trò đã công bố | G18         |
+
 
 ## §6. Bốn đường đi của trải nghiệm
 - Happy path: Học viên giải thích "LLM bịa vì nó đoán từ" · AI RAG khớp tài liệu, thấy thiếu ý · AI đóng vai học trò vặn lại "Dạ thưa, vậy nó học từ dữ liệu khổng lồ sao lại không có thực tế ạ?" · học viên nhận ra, bổ sung "Vì nó chỉ lưu xác suất từ nối tiếp nhau" · AI báo "Em đã hiểu 100%" và chúc mừng hoàn thành.
