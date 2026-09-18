@@ -44,12 +44,11 @@ async def chat_endpoint(req: ChatRequest):
                 gap=retrieved.gap, 
                 slide_ref=retrieved.slide_ref, 
                 history=history_with_latest,
-                slide_text=retrieved.text,
+                
                 topic_id=req.topic_id
             )
             system_instruction, contents = to_google_genai_request(messages)
             
-            import json
             async for text_chunk in generate_content_stream(contents, config={'system_instruction': system_instruction}):
                 yield f"data: {json.dumps({'text': text_chunk, 'slide_ref': retrieved.slide_ref})}\n\n"
         except Exception as e:
