@@ -16,9 +16,20 @@ def get_embedding(text: str) -> np.ndarray:
 
 def load_or_build_cache():
     """Đọc dữ liệu, nếu chưa có vector thì gọi API tạo và lưu cache để đỡ tốn tiền gọi lại"""
-    with open("data/slide_corpus.json", "r", encoding="utf-8") as f:
-        corpus = json.load(f)
+    # Dùng utf-8-sig để tự động loại bỏ ký tự BOM nếu file được tạo từ Windows PowerShell
+    with open("data/slide_corpus.json", "r", encoding="utf-8-sig") as f:
+        raw_corpus = json.load(f)
     
+    # Flatten the nested structure for RAG
+    corpus = []
+    for topic in raw_corpus:
+        for slide in topic.get("slides", []):
+            corpus.append({
+                "topic_id": topic.get("topic_id") or topic.get("id"),
+                "slide_id": slide.get("slide_ref"),
+                "text": slide.get("text") or slide.get("content")
+            })
+            
     if not corpus:
         return [], []
 

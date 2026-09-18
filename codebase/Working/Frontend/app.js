@@ -46,7 +46,7 @@ function updateProgress() {
   $('message').disabled = busy || !current;
   $('send').disabled = busy || !current || $('message').value.trim().length <= 20;
   $('skip-thread').disabled = busy || !current;
-  $('finish').disabled = busy || !current;
+  
   $('open-reference').disabled = !current;
   $('chat-form').setAttribute('aria-busy', String(busy));
   $('send').textContent = busy ? '◌' : '↑';
@@ -193,13 +193,6 @@ $('message').oninput = updateProgress;
 $('message').onkeydown = event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); send(); } };
 $('reset').onclick = () => current ? start(current) : loadTopics();
 $('open-reference').onclick = () => openReference(current);
-$('finish').onclick = () => {
-  if (!current || pending || savingNote) return;
-  noteSession = { topic_id: current.id, turns };
-  $('summary-text').textContent = `Chủ đề: ${current.title}. Bạn đã chia sẻ ${turns} lượt. Hãy ghi lại điều bạn muốn diễn đạt rõ hơn ở lần học tiếp theo.`;
-  $('save-status').textContent = ''; $('reflection').value = '';
-  $('summary-dialog').showModal();
-};
 $('save-note').onclick = async () => {
   if (savingNote || !noteSession) return;
   const reflection = $('reflection').value.trim();
@@ -217,19 +210,12 @@ $('save-note').onclick = async () => {
 };
 document.querySelectorAll('dialog').forEach(dialog => { dialog.querySelectorAll('.close, .close-action').forEach(button => button.onclick = () => dialog.close()); dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close(); } }); });
 
-// Keep the Mock HTML/CSS intact, updating only obsolete demo copy at runtime.
-document.querySelector('.scope-notice small').textContent = 'Hãy diễn đạt bằng lời của bạn và đối chiếu nguồn khi cần.';
-document.querySelector('.mock-note').textContent = '✧ Cùng học qua câu hỏi · Không chấm điểm';
-document.querySelector('.demo-controls').hidden = true;
-document.querySelector('#reference-dialog .dialog-subtitle').textContent = 'Nội dung từ tài liệu của chủ đề đang học.';
-document.querySelector('#summary-dialog .dialog-subtitle').textContent = 'Ghi chú được gửi tới máy chủ khi bạn nhấn Lưu ghi chú.';
-$('open-reference').textContent = 'Xem tài liệu ↗';
 
 async function loadTopics() {
   current = null; updateProgress(); $('reset').disabled = true;
   $('thread-status').textContent = 'Đang tải chủ đề…';
   try {
-    const response = await fetch('/data/slide_corpus.json', { signal: AbortSignal.timeout(15000) });
+    const response = await fetch('/data/slide_corpus.json?t=' + Date.now(), { signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const corpus = await response.json();
     if (!Array.isArray(corpus) || !corpus.length) throw new Error('Tài liệu chưa có chủ đề');

@@ -32,8 +32,8 @@ async def chat_endpoint(req: ChatRequest):
             # 3. RAG: Lục tìm slide liên quan nhất
             retrieved = retrieve(req.user_text, req.topic_id)
             
-            # Fallback G10: Nếu điểm RAG thấp (dưới 65%), giả vờ không hiểu
-            if retrieved.confidence < 0.65:
+            # Fallback G10: Tạm thời hạ ngưỡng xuống 0.2 để test LLM
+            if retrieved.confidence < 0.20:
                 yield f"data: {json.dumps({'text': f'Dạ phần này em chưa rõ lắm, anh/chị có thể dùng khái niệm trong {retrieved.slide_ref} để giải thích cho em không ạ?', 'slide_ref': retrieved.slide_ref})}\n\n"
                 return
 

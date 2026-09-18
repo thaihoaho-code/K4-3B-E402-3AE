@@ -19,5 +19,5 @@ app.add_middleware(
 app.include_router(chat.router)
 app.include_router(notes.router)
 
-# Phục vụ file HTML/JS/CSS cho frontend (mount cuối cùng)
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
+app.mount("/data", StaticFiles(directory="data"), name="data")
+app.mount("/", StaticFiles(directory="Frontend", html=True), name="static")

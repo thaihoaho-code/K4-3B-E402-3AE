@@ -1,42 +1,117 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>VLearn · Học trò</title><link rel="stylesheet" href="style.css"></head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VLearn · Học trò</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<aside class="sidebar">
-  <a class="brand" href="index.html"><span class="brand-icon">v</span>VLearn<span class="brand-dot">.</span></a>
-  <div class="workspace-label">KHÔNG GIAN HỌC TẬP</div>
-  <div class="nav-active"><span>◈</span> Học trò <span class="new">MỚI</span></div>
-  <div class="sidebar-note">Hiểu sâu hơn bằng cách<br>dạy lại điều bạn vừa học.</div>
-  <div class="topic-heading">CHỦ ĐỀ LUYỆN TẬP</div>
-  <nav id="topics" aria-label="Chọn chủ đề"></nav>
-  <div class="sidebar-bottom"><div class="small-orbit">✧</div><strong>Mỗi câu hỏi, một bước hiểu sâu.</strong><p>Không cần câu trả lời hoàn hảo.<br>Cứ bắt đầu bằng lời của bạn.</p></div>
-  <div class="profile"><span class="avatar user-avatar">B</span><div><strong>Bạn học</strong><small>Không gian cá nhân</small></div><span class="online-dot"></span></div>
-</aside>
-<main>
-  <header><div>Không gian học tập <span class="slash">/</span> <strong>Học trò</strong></div><span class="demo-badge"><span></span> Bản trải nghiệm</span></header>
-  <section class="page-heading"><div><div class="eyebrow">HỌC BẰNG CÁCH DẠY LẠI</div><h1>Hôm nay, bạn là người thầy<span>.</span></h1><p>Thử giải thích. Cùng đặt câu hỏi. Hiểu thêm một chút.</p></div><button id="reset" class="button secondary">↺ <span>Buổi học mới</span></button></section>
-  <div class="learning-layout">
-    <section class="chat-card" aria-label="Hội thoại với Học trò">
-      <div class="chat-header"><div class="avatar bot-avatar">✦</div><div><h2>Học trò</h2><p><span class="online-dot"></span> Em sẵn sàng lắng nghe ạ</p></div><span class="role-tag">Thầy/cô giảng · Em học</span></div>
-      <div class="topic-banner"><span>▤</span><div><small>ĐANG CÙNG TÌM HIỂU</small><strong id="topic-title"></strong></div><span class="topic-level">Cơ bản</span></div>
-      <div class="scope-notice"><strong>Đây là phòng tập nháp.</strong><p>AI chỉ đóng vai người nghe dựa trên tài liệu bài <strong id="scope-topic"></strong>, hoàn toàn không chấm điểm hay ghi nhận vào kết quả thi của bạn.</p><small>Bản mock dùng câu hỏi và slide mẫu, chưa kết nối agent/RAG.</small></div>
-      <div id="messages" class="messages" role="log" aria-live="polite" aria-label="Tin nhắn"></div>
-      <div class="chat-actions"><button id="skip-thread" type="button">↪ Bỏ qua mạch này / Đổi góc hỏi</button><span id="thread-status" role="status"></span></div>
-      <div id="suggestions" class="suggestions"></div>
-      <form id="chat-form" class="composer"><label class="sr-only" for="message">Lời giải thích của bạn</label><textarea id="message" rows="2" maxlength="2000" placeholder="Giải thích bằng lời của bạn, như đang kể cho một người bạn…"></textarea><div class="composer-footer"><span>↵ để gửi <span class="desktop-hint">· Shift + Enter để xuống dòng</span></span><button id="send" type="submit" aria-label="Gửi lời giải thích">↑</button></div></form>
-      <div class="mock-note">✧ Phản hồi theo kịch bản mẫu · Chưa kết nối AI hoặc RAG</div>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span class="brand-icon">v</span>VLearn<span class="brand-dot">.</span></a>
+    <div class="workspace-label">KHÔNG GIAN HỌC TẬP</div>
+    <div class="nav-active"><span>◈</span> Học trò <span class="new">MỚI</span></div>
+    <div class="sidebar-note">Hiểu sâu hơn bằng cách<br>dạy lại điều bạn vừa học.</div>
+    <div class="topic-heading">CHỦ ĐỀ LUYỆN TẬP</div>
+    <nav id="topics" aria-label="Chọn chủ đề"></nav>
+    <div class="sidebar-bottom">
+      <div class="small-orbit">✧</div><strong>Mỗi câu hỏi, một bước hiểu sâu.</strong>
+      <p>Không cần câu trả lời hoàn hảo.<br>Cứ bắt đầu bằng lời của bạn.</p>
+    </div>
+    <div class="profile"><span class="avatar user-avatar">B</span>
+      <div><strong>Bạn học</strong><small>Không gian cá nhân</small></div><span class="online-dot"></span>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <div>Không gian học tập <span class="slash">/</span> <strong>Học trò</strong></div><span
+        class="demo-badge"><span></span> Bản trải nghiệm</span>
+    </header>
+    <section class="page-heading">
+      <div class="heading-copy">
+        <div class="eyebrow">HỌC BẰNG CÁCH DẠY LẠI</div>
+        <h1>Hôm nay, bạn là người thầy<span>.</span></h1>
+      </div>
+
+      <span id="scope-topic" style="display:none"></span>
+
+      <button id="reset" class="button secondary">↺ <span>Buổi học mới</span></button>
     </section>
-    <aside class="right-panel">
-      <section class="journey panel"><div class="panel-label">MỘT VÒNG HỌC SÂU <span>↗</span></div><h2>Chậm một chút.<br>Hiểu thêm nhiều.</h2><ol id="steps"><li><span>1</span><div><strong>Giải thích khái niệm</strong><small>Bắt đầu bằng những gì bạn hiểu</small></div></li><li><span>2</span><div><strong>Khám phá câu hỏi</strong><small>Nhìn lại một góc chưa nghĩ tới</small></div></li><li><span>3</span><div><strong>Thử diễn đạt lại</strong><small>Thêm một ví dụ của riêng bạn</small></div></li></ol><div class="session-stat"><span>Số lượt bạn chia sẻ</span><strong id="turn-count">00</strong></div></section>
-      <section class="panel resources"><div class="resource-icon">▤</div><h3>Cần nhìn lại kiến thức?</h3><p>Mở tài liệu khi bạn muốn tự tìm hiểu thêm.</p><button id="open-reference" class="text-button">Xem tài liệu mẫu <span>↗</span></button></section>
-      <details class="panel demo-controls"><summary>Thử tình huống mô phỏng</summary><p>Chưa có RAG để nhận biết ví dụ ngoài phạm vi. Nút này mô phỏng lúc không tìm được căn cứ trong tài liệu.</p><button id="simulate-uncertain" class="button secondary" type="button">Ví dụ chưa có căn cứ</button></details>
-      <section class="gentle-note"><span>☀</span><p>Đây là nơi để thử và suy nghĩ.<br><strong>Không chấm điểm, không áp lực.</strong></p></section>
-      <button id="finish" class="button finish">Kết thúc & ghi lại điều đã học <span>→</span></button>
-    </aside>
-  </div>
-  <footer>VLEARN LAB <span>Thiết kế cho những khoảnh khắc “À, mình hiểu rồi.”</span></footer>
-</main>
-<dialog id="reference-dialog"><div class="dialog-top"><span class="eyebrow">GÓC TÀI LIỆU</span><button class="close" aria-label="Đóng tài liệu">×</button></div><h2 id="reference-title"></h2><p class="dialog-subtitle">Nội dung biên soạn cho bản mock, không phải kết quả truy xuất RAG.</p><div id="reference-body"></div><button class="button primary close-action">Quay lại và thử giải thích</button></dialog>
-<dialog id="summary-dialog"><div class="dialog-top"><span class="eyebrow">MỘT CHÚT NHÌN LẠI</span><button class="close" aria-label="Đóng ghi chú">×</button></div><h2>Mang theo điều bạn vừa hiểu.</h2><p id="summary-text"></p><label for="reflection">Điều mình muốn ghi nhớ</label><textarea id="reflection" rows="5" placeholder="Trước đây mình nghĩ… Giờ mình muốn giải thích lại là…"></textarea><p class="dialog-subtitle">Ghi chú được lưu trên trình duyệt này khi bộ nhớ khả dụng.</p><button id="save-note" class="button primary">Lưu ghi chú</button><span id="save-status" role="status"></span></dialog>
-<script src="app.js"></script>
-</body></html>
+    <div class="learning-layout">
+      <section class="chat-card" aria-label="Hội thoại với Học trò">
+        <div class="chat-header">
+          <div class="avatar bot-avatar">✦</div>
+          <div>
+            <h2>Học trò</h2>
+            <p><span class="online-dot"></span> Em sẵn sàng lắng nghe ạ</p>
+          </div><span class="role-tag">Thầy/cô giảng · Em học</span>
+        </div>
+        <span id="topic-title" style="display:none"></span>
+
+        <div id="messages" class="messages" role="log" aria-live="polite" aria-label="Tin nhắn"></div>
+        <div class="chat-actions"><button id="skip-thread" type="button">↪ Bỏ qua mạch này / Đổi góc hỏi</button><span
+            id="thread-status" role="status"></span></div>
+        <div id="suggestions" class="suggestions"></div>
+        <form id="chat-form" class="composer"><label class="sr-only" for="message">Lời giải thích của
+            bạn</label><textarea id="message" rows="2" maxlength="2000"
+            placeholder="Giải thích bằng lời của bạn, như đang kể cho một người bạn…"></textarea>
+          <div class="composer-footer"><span>↵ để gửi <span class="desktop-hint">· Shift + Enter để xuống
+                dòng</span></span><button id="send" type="submit" aria-label="Gửi lời giải thích">↑</button></div>
+        </form>
+        <div class="mock-note">✧ Phản hồi theo kịch bản mẫu · Chưa kết nối AI hoặc RAG</div>
+      </section>
+      <aside class="right-panel">
+        <section class="journey panel">
+          <div class="panel-label">MỘT VÒNG HỌC SÂU <span>↗</span></div>
+          <h2>Chậm một chút.<br>Hiểu thêm nhiều.</h2>
+          <ol id="steps">
+            <li><span>1</span>
+              <div><strong>Giải thích khái niệm</strong><small>Bắt đầu bằng những gì bạn hiểu</small></div>
+            </li>
+            <li><span>2</span>
+              <div><strong>Khám phá câu hỏi</strong><small>Nhìn lại một góc chưa nghĩ tới</small></div>
+            </li>
+            <li><span>3</span>
+              <div><strong>Thử diễn đạt lại</strong><small>Thêm một ví dụ của riêng bạn</small></div>
+            </li>
+          </ol>
+          <div class="session-stat"><span>Số lượt bạn chia sẻ</span><strong id="turn-count">00</strong></div>
+        </section>
+        <section class="panel resources">
+          <div class="resource-icon">▤</div>
+          <h3>Cần nhìn lại kiến thức?</h3>
+          <p>Mở tài liệu khi bạn muốn tự tìm hiểu thêm.</p><button id="open-reference" class="text-button">Xem tài liệu
+            mẫu <span>↗</span></button>
+        </section>
+        <details class="panel demo-controls">
+          <summary>Thử tình huống mô phỏng</summary>
+          <p>Chưa có RAG để nhận biết ví dụ ngoài phạm vi. Nút này mô phỏng lúc không tìm được căn cứ trong tài liệu.
+          </p><button id="simulate-uncertain" class="button secondary" type="button">Ví dụ chưa có căn cứ</button>
+        </details>
+        <button id="finish" class="button secondary" type="button">✎ Ghi chú cuối buổi</button>
+      </aside>
+    </div>
+    <footer>VLEARN LAB <span>Thiết kế cho những khoảnh khắc “À, mình hiểu rồi.”</span></footer>
+  </main>
+  <dialog id="reference-dialog">
+    <div class="dialog-top"><span class="eyebrow">GÓC TÀI LIỆU</span><button class="close"
+        aria-label="Đóng tài liệu">×</button></div>
+    <h2 id="reference-title"></h2>
+    <p class="dialog-subtitle">Nội dung biên soạn cho bản mock, không phải kết quả truy xuất RAG.</p>
+    <div id="reference-body"></div><button class="button primary close-action">Quay lại và thử giải thích</button>
+  </dialog>
+  <dialog id="summary-dialog">
+    <div class="dialog-top"><span class="eyebrow">MỘT CHÚT NHÌN LẠI</span><button class="close"
+        aria-label="Đóng ghi chú">×</button></div>
+    <h2>Mang theo điều bạn vừa hiểu.</h2>
+    <p id="summary-text"></p><label for="reflection">Điều mình muốn ghi nhớ</label><textarea id="reflection" rows="5"
+      placeholder="Trước đây mình nghĩ… Giờ mình muốn giải thích lại là…"></textarea>
+    <p class="dialog-subtitle">Ghi chú được lưu trên trình duyệt này khi bộ nhớ khả dụng.</p><button id="save-note"
+      class="button primary">Lưu ghi chú</button><span id="save-status" role="status"></span>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+
+</html>
