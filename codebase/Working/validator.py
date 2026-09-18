@@ -65,11 +65,11 @@ def containment_similarity(s1: str, s2: str) -> float:
     return len(tokens_1 & tokens_2) / min(len(tokens_1), len(tokens_2))
 
 
-def _load_corpus() -> dict:
+def _load_corpus() -> list:
     if not CORPUS_PATH.exists():
-        return {}
+        return []
 
-    with CORPUS_PATH.open("r", encoding="utf-8") as file:
+    with CORPUS_PATH.open("r", encoding="utf-8-sig") as file:
         return json.load(file)
 
 
@@ -81,7 +81,7 @@ def check_copy_paste(user_text: str, topic_id: str) -> bool:
         return False
 
     corpus = _load_corpus()
-    topic = corpus.get(topic_id)
+    topic = next((t for t in corpus if t.get("topic_id") == topic_id or t.get("id") == topic_id), None)
 
     if not topic:
         return False
