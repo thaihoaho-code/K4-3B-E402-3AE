@@ -1,0 +1,27 @@
+# ==============================================
+# .gitignore — K4-3B-E402-3AE (root)
+# ==============================================
+
+# ── Python ─────────────────────────────────
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# ── Secrets & env ──────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Generated / re-buildable data ──────────
+codebase/Working/data/
+
+# ── IDE ────────────────────────────────────
+.vscode/
+.idea/
+
+# ── OS ─────────────────────────────────────
+.DS_Store
+Thumbs.db
