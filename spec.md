@@ -1,6 +1,6 @@
-# AI SPEC — [Tên lát cắt] · Nhóm [XX] · Zone [X]
-Hướng: D-
-Loại: [ ] Tối ưu tính năng có sẵn  [ ] Tính năng mới
+# AI SPEC — AI học trò · Nhóm 3AE · Zone C4
+Hướng: D-3
+Loại: [X] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 
 ## §1. User & Job
 - Job executor + workflow (đính kèm worksheet JTBD / ảnh sơ đồ):  Học viên vừa đọc/xem xong một khái niệm lý thuyết cốt lõi trên VLearn $\rightarrow$ gấp tài liệu lại $\rightarrow$ nhẩm lại kiến thức $\rightarrow$ chuẩn bị làm bài tập hoặc thi cử. 
