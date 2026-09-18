@@ -1,6 +1,7 @@
 # 🐍 Sprint 3 Giờ — Agent "Học Trò" · Python Stack
 
-> **Khởi động:** 11:00 · **Deadline hard:** 14:00
+> **Khởi động:** 10:00 · **Deadline hard:** 13:00
+> **Nhóm:** Hòa (Backend/RAG) · Phúc (UI/UX) · Hồng (Prompt/Eval)
 > **Stack:** FastAPI + Uvicorn · google-generativeai · NumPy · Vanilla JS frontend
 
 ---
@@ -62,6 +63,8 @@ graph TD
 | HTTP client | **httpx** | built-in FastAPI dep | Async HTTP nếu cần gọi ngoài |
 | Frontend | **Vanilla HTML/CSS/JS** | — | Giữ nguyên Mock đã có |
 | Serve static | **FastAPI StaticFiles** | — | Mount `/` serve `index.html` luôn, không cần server riêng |
+
+> **Không cần:** Node.js, npm, webpack, pip install express — chỉ cần `pip install fastapi uvicorn google-generativeai numpy python-dotenv`
 
 ---
 
@@ -212,12 +215,12 @@ graph LR
 
 | Thời gian | Task | File | Output kiểm chứng |
 |---|---|---|---|
-| 0:00–0:20 | Setup project: `requirements.txt`, `.env`, `main.py` khởi FastAPI, mount StaticFiles, CORS | `main.py` | `uvicorn main:app --reload` chạy, `localhost:8000` trả 200 |
-| 0:20–0:50 | `retriever.py`: load `slide_corpus.json`, gọi `text-embedding-004`, numpy cosine, cache `.npy` (**chờ Phúc push schema trước**) | `retriever.py` | `python -c "from retriever import retrieve; print(retrieve('LLM bịa', 'llm'))"` |
-| 0:50–1:20 | `llm.py`: `genai.GenerativeModel`, `generate_content_async(stream=True)`, async generator yielding SSE chunks | `llm.py` | Test stream trong terminal |
-| 1:20–1:50 | `chat.py`: `StreamingResponse` + `media_type="text/event-stream"`, orchestrate VAL→RAG→PROMPT→LLM | `chat.py` | `curl -N localhost:8000/chat -d '{"topic_id":"llm","user_text":"..."}'` stream OK |
-| 1:50–2:10 | `notes.py`: đọc/ghi `notes.json` thread-safe | `notes.py` | POST /notes → file update |
-| 2:10–3:00 | Fine-tune RAG threshold, buffer bug fix, hỗ trợ eval | — | Demo ổn định |
+| 0:00–0:20 | `main.py`: FastAPI app, mount `StaticFiles(".")`, CORS, uvicorn entry | `main.py` | `uvicorn main:app --reload` → `localhost:8000` trả 200 |
+| 0:20–0:50 | `llm.py`: `genai.GenerativeModel`, `generate_content_async(stream=True)`, async generator → SSE chunks | `llm.py` | Stream chạy trong terminal |
+| 0:50–1:20 | `retriever.py`: load `slide_corpus.json`, embed `text-embedding-004`, numpy cosine, cache `.npy` (**đã có data từ Hồng T+0:50**) | `retriever.py` | `python -c "from retriever import retrieve; print(retrieve('LLM bịa','llm'))"` |
+| 1:20–1:50 | `chat.py`: `StreamingResponse(media_type="text/event-stream")`, orchestrate VAL → RAG → PROMPT → LLM | `chat.py` | `curl -N localhost:8000/chat -d '{"topic_id":"llm","user_text":"LLM chỉ đoán từ"}'` → stream |
+| 1:50–2:10 | `notes.py`: đọc/ghi `data/notes.json` thread-safe (`asyncio.Lock`) | `notes.py` | `curl -X POST localhost:8000/notes -d '{"topic_id":"llm","reflection":"test"}'` → 200 |
+| 2:10–3:00 | Fine-tune RAG threshold · fix bug · hỗ trợ Phúc debug CORS nếu cần | — | Demo curl ổn định |
 
 ### 🟢 Nguyễn Đình Lâm Phúc — `feature/frontend`
 
@@ -244,7 +247,9 @@ graph LR
 | 2:20–2:50 | `eval/eval.py`: call `POST /chat`, assert reply type theo golden set (**chạy sau khi backend merge T+2:15**) | `eval.py` | `python eval/eval.py` → ≥85% pass |
 | 2:50–3:00 | Điền kết quả vào `spec.md §7` | `spec.md` | Quality bar chốt |
 
-## Merge
+### 🔴 Bạn (Product Lead) — Merge Manager
+
+> Không để thành viên tự merge vào `main`. Kiểm tra gate trước khi merge.
 
 | Thời gian | Merge | Điều kiện gate | Hành động sau merge |
 |---|---|---|---|
@@ -279,8 +284,8 @@ gitGraph
 
     checkout feature/backend
     commit id: "main.py FastAPI"
-    commit id: "retriever.py RAG"
     commit id: "llm.py stream"
+    commit id: "retriever.py RAG"
     commit id: "chat.py SSE"
     commit id: "notes.py"
 
@@ -317,7 +322,7 @@ git fetch origin feature/eval
 git checkout origin/feature/eval -- models.py
 ```
 
-### ✅ T+0:50 — Hòa cherry-pick `models.py` + `slide_corpus.json` vào `main`
+### ✅ T+0:50 — Bạn cherry-pick `models.py` + `slide_corpus.json` vào `main`
 
 Hòa + Phúc `git pull --rebase origin main` → unblock hoàn toàn.
 
@@ -329,7 +334,7 @@ Hòa + Phúc `git pull --rebase origin main` → unblock hoàn toàn.
 | Phúc | Bubble animate khi gọi mock server (BE chưa cần xong) | `json-server` hoặc `python -m http.server` làm mock |
 | Hồng | `validator.py` pass test thủ công · `prompt.py` draft xong | Hỗ trợ Hòa debug RAG |
 
-### ✅ T+2:10 — Integration Test (FE + BE đã merge)
+### ✅ T+2:15 — Integration Test (FE + BE đã merge)
 
 | # | Tiêu chí | Cách test |
 |---|---|---|
