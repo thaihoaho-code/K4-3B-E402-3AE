@@ -1,0 +1,47 @@
+# =============================================================
+# requirements.txt
+# Python >= 3.11  (tested on 3.13.13)
+# Generated: 2026-09-18  Verified: pip --dry-run, no conflicts
+# =============================================================
+
+# ── Web framework ────────────────────────────────────────────
+# FastAPI 0.100+ yeu cau pydantic v2; khong dung < 0.100
+fastapi==0.141.1
+
+# ── ASGI server ──────────────────────────────────────────────
+# [standard] keo them: httptools, uvloop (Windows dung asyncio),
+# websockets, watchfiles (hot-reload).
+# uvloop khong ho tro Windows -> pip tu bo qua, khong xung dot.
+uvicorn[standard]==0.53.0
+
+# ── Google Gemini SDK (moi, thay the google-generativeai) ────
+# google-genai >= 2.0 dung pydantic v2 -> tuong thich voi FastAPI.
+# KHONG dung google-generativeai cung luc: hai SDK xung dot
+# o namespace google.generativeai vs google.genai.
+google-genai==2.24.0
+
+# ── Numerical computing (RAG cosine similarity) ──────────────
+# numpy 2.x thay doi mot so API cu (np.bool, np.int...).
+# google-genai 2.24 tuong thich numpy >= 1.26, <= 2.5.
+numpy==2.5.3
+
+# ── Pydantic v2 (FastAPI & google-genai dep, pin ro rang) ────
+# FastAPI 0.141 yeu cau pydantic >= 2.7.0.
+# google-genai 2.24 yeu cau pydantic >= 2.0.
+# Pin cung 1 version de dam bao nhat quan.
+pydantic==2.13.5
+
+# ── Pydantic Settings (load .env vao Settings class) ─────────
+# pydantic-settings >= 2.0 yeu cau pydantic v2.
+pydantic-settings==2.15.0
+
+# ── Environment variables ─────────────────────────────────────
+python-dotenv==1.2.3
+
+# =============================================================
+#   httpx      -> da la dep cua fastapi/starlette
+#   starlette  -> da la dep cua fastapi
+#   anyio      -> da la dep cua starlette/uvicorn
+#   typing_extensions -> da la dep cua pydantic
+#   google-auth -> da la dep cua google-genai
+# =============================================================
