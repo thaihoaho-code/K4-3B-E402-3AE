@@ -52,5 +52,15 @@
       }
     ],
     "topic_id": "hallucination_limits"
+  },
+  {
+    "title": "Đổi mới sáng tạo.pdf",
+    "slides": [
+      {
+        "slide_ref": "Slide 1",
+        "text": "Đổi mới sáng tạo là sự kết hợp giữa sáng tạo và đổi mới, được hiểu là quá trình biến đổi các ý tưởng mới có tiềm năng thành những giá trị thực tế (công nghệ, quy trình, mô hình kinh doanh...) có ích cho cộng đồng. Quá trình này liên tục hoàn thiện cái mới đến mức tối ưu về năng suất và giá trị, đồng thời gắn liền với thực tiễn thương mại."
+      }
+    ],
+    "topic_id": "__i_m_i_s_ng_t_o"
   }
 ]
